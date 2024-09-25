@@ -12,6 +12,9 @@ config :a_trading_system,
 
 # Configures the endpoint
 config :a_trading_system, ATradingSystemWeb.Endpoint,
+  http: [ip: {0, 0, 0, 0}, port: 4000],
+  check_origin: false,
+  debug_errors: true,
   url: [host: "localhost"],
   adapter: Bandit.PhoenixAdapter,
   render_errors: [
