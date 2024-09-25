@@ -21,7 +21,7 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 
 * Automate deployment to staging environment into the build system
 
-  [ ] Decide which machine should exec the pipeline
+  [ ] Decide which machine should exec the pipeline [see FHS](https://www.pathname.com/fhs/pub/fhs-2.3.html#SRVDATAFORSERVICESPROVIDEDBYSYSTEM)
   [ ] Task to install
   [ ] Task to test
   [ ] Task to uninstall
@@ -33,7 +33,7 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 * Create production environment
 
   [ ] Decide which machine or user should be responsible for keeping up production environment
-  [ ] Examine systemd integration
+  [ ] Examine systemd integration [starting here](https://elixirforum.com/t/elixir-apps-as-systemd-services-info-wiki/2400) and [here](https://serverfault.com/questions/413397/how-to-set-environment-variable-in-systemd-service)
   [ ] Serve on port 80
   [ ] Tasks similar to staging environment
   [ ] Examine if mix releases are good enough
@@ -52,6 +52,7 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 
   [ ] Simplify deployment of git hooks
   [ ] Create environment on each developer workstation
+  [ ] Align dev and prod environments inside phx (leave all differences in environment vars)
 
 * Check if some dependencies can be removed
 * Plug in broker api
