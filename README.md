@@ -20,6 +20,7 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 ## TODO
 
 * Automate deployment to staging environment into the build system
+
   [ ] Decide which machine should exec the pipeline
   [ ] Task to install
   [ ] Task to test
@@ -28,7 +29,9 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
   [ ] Plug all deployment tasks in git hooks
   [ ] Simplify deployment of git hooks
   [ ] Consider setting up a new machine where to deploy
+
 * Create production environment
+
   [ ] Decide which machine or user should be responsible for keeping up production environment
   [ ] Examine systemd integration
   [ ] Serve on port 80
@@ -36,13 +39,20 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
   [ ] Examine if mix releases are good enough
   [ ] Create system user for the application
   [ ] Use https
+  [ ] log into /var/log/ directory
+  [ ] assure data are written in /var/local/ directory
+
 * Hardining CI/CD pipeline
+
   [ ] mix format before commit
   [ ] mix test before commit
   [ ] mix test after integration
+
 * Automate deployment to new development environment
+
   [ ] Simplify deployment of git hooks
   [ ] Create environment on each developer workstation
+
 * Check if some dependencies can be removed
 * Plug in broker api
 * Build fake trading system
@@ -58,4 +68,5 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 * elixir ws client
 * https
 * broker api
+* neovim
 
