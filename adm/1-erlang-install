@@ -1,0 +1,3 @@
+apt update
+apt install erlang-{crypto,inets,parsetools,public-key,tools,dev,xmerl}
+

@@ -1,0 +1,4 @@
+cd elixir-main-latest/
+make install
+cd -
+
