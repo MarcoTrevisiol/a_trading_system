@@ -1,4 +1,2 @@
-cd elixir-main-latest/
-make install
-cd -
+(cd elixir-main-latest/ && make install)
 

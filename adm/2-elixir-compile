@@ -1,7 +1,5 @@
 tarball="main-latest.tar.gz"
 wget -O "${tarball}" https://github.com/elixir-lang/elixir/archive/refs/tags/"${tarball}"
 tar -xf "${tarball}"
-cd elixir-main-latest
-make clean compile
-cd -
+(cd elixir-main-latest && make clean compile)
 
