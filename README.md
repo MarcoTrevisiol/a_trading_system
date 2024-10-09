@@ -23,11 +23,11 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 
   [x] Decide which machine should exec the pipeline [see FHS](https://www.pathname.com/fhs/pub/fhs-2.3.html#SRVDATAFORSERVICESPROVIDEDBYSYSTEM)
   [ ] After push, a chain of work is done
-  [ ] Task to revert
+  [ ] Task to rollback (on demand)
   [ ] Plug all deployment tasks in git hooks
   [ ] Simplify deployment of git hooks
   [ ] Consider setting up a new machine where to deploy
-  [ ] Setting up git "server" on /srv/git/
+  [x] Setting up git "server" on /srv/git/
 
 * Create production environment
 
