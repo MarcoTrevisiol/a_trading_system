@@ -22,8 +22,8 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 * Automate deployment to staging environment into the build system
 
   [x] Decide which machine should exec the pipeline [see FHS](https://www.pathname.com/fhs/pub/fhs-2.3.html#SRVDATAFORSERVICESPROVIDEDBYSYSTEM)
-  [ ] After push, a chain of work is done
-  [ ] Task to rollback (on demand)
+  [x] After push, a chain of work is done
+  [x] Task to rollback (on demand)
   [ ] Plug all deployment tasks in git hooks
   [ ] Simplify deployment of git hooks
   [ ] Consider setting up a new machine where to deploy

@@ -18,7 +18,7 @@ export SECRET_KEY_BASE=$(MIX_ENV=prod mix phx.gen.secret)
 MIX_ENV=prod mix assets.deploy
 MIX_ENV=prod mix release --overwrite
 _build/prod/rel/a_trading_system/bin/a_trading_system daemon
-) >"$log_file"
+) &>"$log_file"
 
 [ $? -eq 0 ] && mv "$log_file" "${log_file}.success.log" || mv "$log_file" "${log_file}.failure.log"
 
