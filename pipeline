@@ -1,30 +1,24 @@
 #/bin/bash
 
 work_tree=/tmp/a_trading_system/
-if [ ! -d "$work_tree" ]; then
-	mkdir "$work_tree"
-	echo "$work_tree created"
-else
-	echo "$work_tree exist"
-fi	
-git --git-dir=/srv/git/a_trading_system.git/ --work-tree="$work_tree" checkout -f main
+git_ref="${1:-main}"
+log_file=/var/log/git/"$(date -Iseconds)"
+
+(
+set -e
+
+mkdir -p "$work_tree"
+git --git-dir=/srv/git/a_trading_system.git/ --work-tree="$work_tree" checkout -f "$git_ref"
 cd "$work_tree"
-#export PATH="/home/admin/.asdf/shims:/home/admin/.asdf/bin:${PATH}"
-#export ASDF_DIR=~/.asdf
-#export ASDF_DATA_DIR=~admin/.asdf
-#. "${ASDF_DIR}/asdf.sh"
-#. "${ASDF_DIR}/lib/utils.bash"
-echo "Path: $PATH"
-#echo "${BASH_SOURCE[@]}"
-
-#export ASDF_DIRENV_BIN="/home/admin/.asdf/installs/direnv/2.34.0/bin/direnv"
-#eval "$($ASDF_DIRENV_BIN hook bash)"
-
-echo "------"
+mix deps.get --only test
+MIX_ENV=test mix test
 
 mix deps.get --only prod
 export SECRET_KEY_BASE=$(MIX_ENV=prod mix phx.gen.secret)
 MIX_ENV=prod mix assets.deploy
-MIX_ENV=prod mix release
-_build/prod/rel/a_trading_system/bin/a_trading_system start
+MIX_ENV=prod mix release --overwrite
+_build/prod/rel/a_trading_system/bin/a_trading_system daemon
+) >"$log_file"
+
+[ $? -eq 0 ] && mv "$log_file" "${log_file}.success.log" || mv "$log_file" "${log_file}.failure.log"
 
