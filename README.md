@@ -36,7 +36,7 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
   [ ] Serve on port 80
   [ ] Task to install
   [ ] Task to uninstall
-  [ ] Examine if mix releases are good enough
+  [x] Examine if mix releases are good enough
   [ ] Create system user for the application
   [ ] Use https
   [ ] log into /var/log/ directory
