@@ -1,7 +1,7 @@
 #!/bin/sh
 
-username="xyz"
-app_name="app"
+username="git"
+app_name="a_trading_system"
 home_prefix="/var/lib"
 git_dir="/srv/git"
 log_dir="/var/log/${username}"
@@ -15,15 +15,26 @@ mkdir -p "${home}/.ssh/"
 chmod 700 "${home}/.ssh/"
 touch "${home}/.ssh/authorized_keys"
 chmod 600 "${home}/.ssh/authorized_keys"
-chown -R git "${home}"
+chown -R "${username}:${username}" "${home}"
 
 # Git dir creation
 mkdir -p "$git_dir"
 git init --bare "${git_dir}/${app_name}.git"
-cp update "${git_dir}/${app_name}.git/hooks/update"
-chown -R git "$git_dir"
+cp update "${git_dir}/${app_name}.git/hooks/update" # maybe create script inline
+#cat >"${git_dir}/${app_name}.git/hooks/update" << EOF
+##!/bin/bash
+#
+#pipeline=/tmp/a_trading_system/pipeline
+#
+#if [[ -f "$pipeline" && $1 =~ main ]]; then
+#	("$pipeline" main) >/dev/null 2>&1 &
+#fi
+#
+#EOF
+
+chown -R "${username}:${username}" "$git_dir"
 
 # Log dir creation
 mkdir -p "$log_dir"
-chown -R git "$log_dir"
+chown -R "${username}:${username}" "$log_dir"
 

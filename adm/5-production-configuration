@@ -1,0 +1,23 @@
+#!/bin/sh
+
+app_name="app"
+deploy_user="git"
+app_group="$app_name"
+deploy_dir="/srv/${app_name}"
+
+# User creation
+adduser --system --group --no-create-home "$app_name"
+
+# Deploy dir creation and population
+mkdir -p "${deploy_dir}/"
+mkdir -p "${deploy_dir}/bin"
+cp -r "_build/prod/rel/${app_name}" "${deploy_dir}"
+chown -R "${deploy_user}:${app_group}" "${deploy_dir}"
+
+# Systemd integration
+mkdir -p "/etc/systemd/system/"
+cp -r _build/prod/systemd/lib/systemd/ /etc/systemd/
+systemctl daemon-reload
+systemctl enable "$app_name"
+systemctl start "$app_name"
+
