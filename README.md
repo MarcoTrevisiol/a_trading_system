@@ -24,14 +24,14 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
   [x] Decide which machine should exec the pipeline [see FHS](https://www.pathname.com/fhs/pub/fhs-2.3.html#SRVDATAFORSERVICESPROVIDEDBYSYSTEM)
   [x] After push, a chain of work is done
   [x] Task to rollback (on demand)
-  [ ] Plug all deployment tasks in git hooks
+  [x] Plug all deployment tasks in git hooks
   [ ] Simplify deployment of git hooks
   [ ] Consider setting up a new machine where to deploy
   [x] Setting up git "server" on /srv/git/
 
 * Create production environment
 
-  [ ] Decide which machine or user should be responsible for keeping up production environment
+  [x] Decide which machine or user should be responsible for keeping up production environment
   [ ] Examine systemd integration [starting here](https://elixirforum.com/t/elixir-apps-as-systemd-services-info-wiki/2400) and [here](https://serverfault.com/questions/413397/how-to-set-environment-variable-in-systemd-service)
   [ ] Serve on port 80
   [ ] Task to install
