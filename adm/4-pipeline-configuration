@@ -1,0 +1,29 @@
+#!/bin/sh
+
+username="xyz"
+app_name="app"
+home_prefix="/var/lib"
+git_dir="/srv/git"
+log_dir="/var/log/${username}"
+home="${home_prefix}/${username}"
+
+# User creation
+adduser --system --group --home "$home" --no-create-home --shell /usr/bin/sh "$username"
+
+# User home creation
+mkdir -p "${home}/.ssh/"
+chmod 700 "${home}/.ssh/"
+touch "${home}/.ssh/authorized_keys"
+chmod 600 "${home}/.ssh/authorized_keys"
+chown -R git "${home}"
+
+# Git dir creation
+mkdir -p "$git_dir"
+git init --bare "${git_dir}/${app_name}.git"
+cp update "${git_dir}/${app_name}.git/hooks/update"
+chown -R git "$git_dir"
+
+# Log dir creation
+mkdir -p "$log_dir"
+chown -R git "$log_dir"
+
