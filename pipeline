@@ -17,7 +17,7 @@ mix deps.get --only prod
 export SECRET_KEY_BASE=$(MIX_ENV=prod mix phx.gen.secret)
 MIX_ENV=prod mix assets.deploy
 MIX_ENV=prod mix release --overwrite
-PORT=4001 _build/prod/rel/a_trading_system/bin/a_trading_system daemon
+PORT=4001 RELEASE_DISTRIBUTION=none _build/prod/rel/a_trading_system/bin/a_trading_system daemon
 ) >"$log_file" 2>&1
 
 [ $? -eq 0 ] && mv "$log_file" "${log_file}.success.log" || mv "$log_file" "${log_file}.failure.log"
