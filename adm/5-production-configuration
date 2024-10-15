@@ -14,6 +14,9 @@ mkdir -p "${deploy_dir}/bin"
 cp -r "_build/prod/rel/${app_name}" "${deploy_dir}"
 chown -R "${deploy_user}:${app_group}" "${deploy_dir}"
 
+# Sudoers
+cp "adm/sudoers" "/etc/sudoers.d/deploy-a-trading-system"
+
 # Systemd integration
 mkdir -p "/etc/${app_name}/"
 echo "SECRET_KEY_BASE=$(MIX_ENV=prod mix phx.gen.secret)" >"/etc/${app_name}/environment"
@@ -32,4 +35,5 @@ cat >>/etc/ufw/before.rules <<EOF
 -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 4000
 COMMIT
 EOF
+
 

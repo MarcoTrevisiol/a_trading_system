@@ -32,14 +32,14 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 * Create production environment
 
   [x] Decide which machine or user should be responsible for keeping up production environment
-  [ ] Examine systemd integration [starting here](https://elixirforum.com/t/elixir-apps-as-systemd-services-info-wiki/2400) and [here](https://serverfault.com/questions/413397/how-to-set-environment-variable-in-systemd-service)
-  [ ] Serve on port 80
-  [ ] Task to install
+  [x] Examine systemd integration [starting here](https://elixirforum.com/t/elixir-apps-as-systemd-services-info-wiki/2400) and [here](https://serverfault.com/questions/413397/how-to-set-environment-variable-in-systemd-service)
+  [x] Serve on port 80
+  [x] Task to install
   [ ] Task to uninstall
   [x] Examine if mix releases are good enough
   [ ] Create system user for the application
   [ ] Use https
-  [ ] log into /var/log/ directory
+  [~] log into /var/log/ directory
   [ ] assure data are written in /var/local/ directory
   [ ] change lib structure to clarify installations (e.g. in /usr/local/lib/)
 

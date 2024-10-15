@@ -1,0 +1,2 @@
+git ALL=(ALL) NOPASSWD: /bin/systemctl start a-trading-system, /bin/systemctl stop a-trading-system, /bin/systemctl restart a-trading-system
+
