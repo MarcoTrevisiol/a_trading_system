@@ -15,9 +15,21 @@ cp -r "_build/prod/rel/${app_name}" "${deploy_dir}"
 chown -R "${deploy_user}:${app_group}" "${deploy_dir}"
 
 # Systemd integration
-mkdir -p "/etc/systemd/system/"
+mkdir -p "/etc/${app_name}/"
+echo "SECRET_KEY_BASE=$(MIX_ENV=prod mix phx.gen.secret)" >"/etc/${app_name}/environment"
 cp -r _build/prod/systemd/lib/systemd/ /etc/systemd/
 systemctl daemon-reload
 systemctl enable "$app_name"
 systemctl start "$app_name"
+
+# Ufw stuff
+apt install ufw
+ufw enable
+ufw allow 4000/tcp
+cat >>/etc/ufw/before.rules <<EOF
+*nat
+:PREROUTING ACCEPT [0:0]
+-A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 4000
+COMMIT
+EOF
 
