@@ -1,6 +1,6 @@
 #/bin/bash
 
-work_tree=/tmp/a_trading_system/
+work_tree=/var/cache/a_trading_system/
 git_ref="${1:-main}"
 log_file=/var/log/git/"$(date -Iseconds)"
 
