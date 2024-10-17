@@ -19,9 +19,13 @@ defmodule ATradingSystem.MixProject do
   def application do
     [
       mod: {ATradingSystem.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :cowboy]
+      #      applications: applications(Mix.env())
     ]
   end
+
+  # defp applications(:test), do: applications(:default) ++ [:httpoison, :cowboy]
+  # defp applications(_), do: applications(:default) ++ [:httpoison]
 
   # Specifies which paths to compile per environment.
   defp elixirc_paths(:test), do: ["lib", "test/support"]
@@ -32,6 +36,8 @@ defmodule ATradingSystem.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      # Phoenix deps
+
       {:phoenix, "~> 1.7.14"},
       {:phoenix_html, "~> 4.1"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
@@ -56,7 +62,16 @@ defmodule ATradingSystem.MixProject do
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.5"},
-      {:mix_systemd, "~> 0.1"}
+
+      # Deployment support for SystemD deps
+      {:mix_systemd, "~> 0.1", only: :dev},
+
+      # HTTP Request deps
+      {:httpoison, "~> 2.0"},
+
+      # Mock Server deps
+      {:dialyxir, "~> 0.5", only: [:dev], runtime: false},
+      {:plug_cowboy, "~> 2.0"}
     ]
   end
 
