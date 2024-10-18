@@ -1,5 +1,5 @@
 #!/bin/sh
 
-rsync -av /tmp/a_trading_system/_build/prod/rel/a_trading_system/ /srv/a-trading-system/current/
-/bin/systemctl restart a-trading-system.service
+rsync -a /tmp/a_trading_system/_build/prod/rel/a_trading_system/ /srv/a-trading-system/current/
+sudo /bin/systemctl restart a-trading-system
 
