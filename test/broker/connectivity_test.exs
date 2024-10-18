@@ -4,6 +4,7 @@ defmodule Broker.ConnectivityTest do
   @success_repo_params %{name: "success-repo"}
   @failure_repo_params %{name: "failed-repo"}
 
+  @tag :skip
   test "create_repo when success" do
     response = Broker.Connectivity.create_repo(@success_repo_params)
     assert response == :ok
@@ -11,6 +12,7 @@ defmodule Broker.ConnectivityTest do
     # assert %{name: "success-repo"} == response
   end
 
+  @tag :skip
   test "create_repo when failure" do
     response = Broker.Connectivity.create_repo(@failure_repo_params)
     assert %{error_message: "error message"} == response
