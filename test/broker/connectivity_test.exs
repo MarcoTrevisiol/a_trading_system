@@ -4,6 +4,14 @@ defmodule Broker.ConnectivityTest do
   @success_repo_params %{name: "success-repo"}
   @failure_repo_params %{name: "failed-repo"}
 
+  setup do
+    start_supervised!(
+      {Plug.Cowboy, scheme: :http, plug: BrokerDouble.FakeServer, options: [port: 8081]}
+    )
+
+    :ok
+  end
+
   @tag :skip
   test "create_repo when success" do
     response = Broker.Connectivity.create_repo(@success_repo_params)

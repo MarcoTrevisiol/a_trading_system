@@ -9,7 +9,6 @@ defmodule ATradingSystem.Application do
   def start(_type, _args) do
     children = [
       ATradingSystemWeb.Telemetry,
-      {Plug.Cowboy, scheme: :http, plug: BrokerDouble.FakeServer, options: [port: 8081]},
       {DNSCluster, query: Application.get_env(:a_trading_system, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: ATradingSystem.PubSub},
       # Start the Finch HTTP client for sending emails
