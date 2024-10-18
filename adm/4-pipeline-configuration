@@ -24,7 +24,7 @@ cp update "${git_dir}/${app_name}.git/hooks/update" # maybe create script inline
 #cat >"${git_dir}/${app_name}.git/hooks/update" << EOF
 ##!/bin/bash
 #
-#pipeline=/tmp/a_trading_system/pipeline
+#pipeline=/var/cache/a_trading_system/pipeline
 #
 #if [[ -f "$pipeline" && $1 =~ main ]]; then
 #	("$pipeline" main) >/dev/null 2>&1 &

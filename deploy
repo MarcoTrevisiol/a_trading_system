@@ -1,5 +1,8 @@
 #!/bin/sh
 
-rsync -a /tmp/a_trading_system/_build/prod/rel/a_trading_system/ /srv/a-trading-system/current/
+work_tree=/var/cache/a_trading_system
+deployment_dir=/srv/a-trading-system/current
+
+rsync -a "${work_tree}/_build/prod/rel/a_trading_system/" "$deployment_dir"
 sudo /bin/systemctl restart a-trading-system
 
