@@ -14,7 +14,7 @@ defmodule BrokerDouble.FakeServer do
       %{"name" => "success-repo"} ->
         success(conn, %{"id" => 1234, "name" => "success-repo"})
 
-      %{"name" => "failure-repo"} ->
+      %{"name" => "failed-repo"} ->
         failure(conn)
     end
   end
