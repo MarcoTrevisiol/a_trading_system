@@ -9,7 +9,8 @@ defmodule ATradingSystem.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      releases: [prod: [include_executable_for: [:unix]]]
     ]
   end
 
@@ -20,7 +21,6 @@ defmodule ATradingSystem.MixProject do
     [
       mod: {ATradingSystem.Application, []},
       extra_applications: [:logger, :runtime_tools, :cowboy]
-      #      applications: applications(Mix.env())
     ]
   end
 
