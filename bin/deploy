@@ -5,8 +5,9 @@ relative_dir="$(date -u -Iminutes)"
 release_dir="/srv/a-trading-system/releases/${relative_dir}"
 
 mkdir -p "${release_dir}/etc/"
-cp -r "${work_tree}/_build/prod/rel/a_trading_system/" "$release_dir"
+cp -a "${work_tree}/_build/prod/rel/a_trading_system/." "$release_dir"
 cp /etc/a-trading-system/environment-production "${release_dir}/etc/environment"
+rm -f /srv/a-trading-system/current
 ln -sf "releases/$relative_dir" /srv/a-trading-system/current
 
 sudo /bin/systemctl restart a-trading-system
