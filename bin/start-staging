@@ -3,6 +3,6 @@
 set -a
 
 release_dir=/srv/a-trading-system/staging
-source "${release_dir}/etc/environment"
+. "${release_dir}/etc/environment"
 "${release_dir}/bin/a_trading_system" daemon
 
