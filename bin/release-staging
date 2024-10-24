@@ -7,5 +7,5 @@ dest_dir="/srv/a-trading-system/releases/${relative_dir}"
 mkdir -p "${dest_dir}/etc/"
 cp -r "${build_dir}/" "$dest_dir"
 cp /etc/a-trading-system/environment-staging "${dest_dir}/etc/environment"
-ln -sf "$relative_dir" /srv/a-trading-system/staging
+ln -sf "releases/$relative_dir" /srv/a-trading-system/staging
 
