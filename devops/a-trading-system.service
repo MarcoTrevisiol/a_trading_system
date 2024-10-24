@@ -10,31 +10,12 @@ WorkingDirectory=/srv/a-trading-system/current
 
 ExecStart=/srv/a-trading-system/current/bin/a_trading_system start
 ExecStop=/srv/a-trading-system/current/bin/a_trading_system stop
-Environment=LANG=en_US.utf8
-Environment=MIX_ENV=prod
-EnvironmentFile=/etc/a-trading-system/environment
-
-
-
-
-
-
-
+EnvironmentFile=/srv/a-trading-system/current/etc/environment
 
 LimitNOFILE=65535
 UMask=0027
 SyslogIdentifier=a-trading-system
 Restart=always
-
-
-
-
-
-
-
-
-
-
 
 
 [Install]

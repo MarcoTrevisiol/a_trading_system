@@ -1,0 +1,10 @@
+#!/bin/sh
+
+build_dir=_build/prod/rel/a_trading_system
+
+dest_dir=/srv/a-trading-system/releases/staging-"$(date -u -Iminutes)"
+mkdir -p "${dest_dir}/etc/"
+cp -r "${build_dir}/" "$dest_dir"
+cp /etc/a-trading-system/environment-staging "${dest_dir}/etc/environment"
+ln -sf "$dest_dir" /srv/a-trading-system/staging
+

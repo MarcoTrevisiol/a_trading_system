@@ -1,6 +1,6 @@
 #!/bin/bash
 
-pipeline=/var/cache/a_trading_system/pipeline
+pipeline=/var/cache/a_trading_system/bin/pipeline
 
 if [[ -f "$pipeline" && $1 =~ main ]]; then
 	("$pipeline" main) >/dev/null 2>&1 &
