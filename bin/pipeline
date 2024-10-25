@@ -19,6 +19,7 @@ mix deps.get --only prod
 export SECRET_KEY_BASE=$(MIX_ENV=prod mix phx.gen.secret)
 MIX_ENV=prod mix assets.deploy
 MIX_ENV=prod mix release --overwrite
+"${work_tree}/bin/stop-staging"
 "${work_tree}/bin/release-staging"
 "${work_tree}/bin/start-staging"
 ) >"$log_file" 2>&1

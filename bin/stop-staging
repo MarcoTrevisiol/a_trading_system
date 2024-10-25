@@ -1,0 +1,9 @@
+#!/bin/sh
+
+release_dir=/srv/a-trading-system/staging
+
+set -a
+
+. "${release_dir}/etc/environment"
+"${release_dir}/bin/a_trading_system" stop
+
