@@ -38,3 +38,6 @@ npm-debug.log
 /assets/node_modules/
 
 /rel/
+
+# Ignore temporary environment files
+*environment*
