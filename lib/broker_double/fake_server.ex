@@ -48,7 +48,7 @@ defmodule BrokerDouble.FakeServer do
 
   post "/auth" do
     case conn.params do
-      %{"username" => "username", "password" => "password", "apikey" => "apikey"} ->
+      %{} ->
         Plug.Conn.send_resp(conn, 200, Jason.encode!(@success_body))
 
       _ ->
@@ -98,6 +98,20 @@ defmodule BrokerDouble.FakeServer do
   }
 
   get "/stream/create" do
+    Plug.Conn.send_resp(conn, 200, Jason.encode!(@create_data))
+  end
+
+  #
+  #   __ MARKET __
+  #
+
+  @create_data %{
+    "Quotes" => [%{s: "XCME:6E"}],
+    "status" => "OK",
+    "message" => "String"
+  }
+
+  get "/market/quotes" do
     Plug.Conn.send_resp(conn, 200, Jason.encode!(@create_data))
   end
 end
