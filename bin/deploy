@@ -1,7 +1,7 @@
 #!/bin/sh
 
 work_tree=/var/cache/a_trading_system
-relative_dir="$(date -u -Iminutes)"
+relative_dir="prod-$(date -u -Iminutes)"
 release_dir="/srv/a-trading-system/releases/${relative_dir}"
 
 mkdir -p "${release_dir}/etc/"
