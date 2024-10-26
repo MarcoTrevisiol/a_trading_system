@@ -19,8 +19,8 @@ cp "adm/sudoers" "/etc/sudoers.d/10-deploy-a-trading-system"
 
 # Systemd integration
 mkdir -p "/etc/${app_name}/"
-echo "SECRET_KEY_BASE=$(MIX_ENV=prod mix phx.gen.secret)" >"/etc/${app_name}/environment"
-cp -r _build/prod/systemd/lib/systemd/ /etc/systemd/
+#echo "SECRET_KEY_BASE=$(MIX_ENV=prod mix phx.gen.secret)" >"/etc/${app_name}/environment"
+cp -r _build/prod/systemd/lib/systemd/system/a-trading-system.service /etc/systemd/system/
 systemctl daemon-reload
 systemctl enable "$app_name"
 systemctl start "$app_name"

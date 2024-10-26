@@ -1,0 +1,17 @@
+#!/bin/bash
+
+rm -r /var/cache/a_trading_system/
+rm -r /srv/a-trading-system/
+# rm /etc/ufw/before.rules
+apt purge ufw
+rm /etc/systemd/system/a-trading-system.service
+rm /etc/sudoers.d/10-deploy-a-trading-system
+rm -r /var/log/git/
+rm -r /srv/git/
+rm -r /var/lib/git/.*
+deluser --system a-trading-system
+deluser --system git
+rm -r /usr/local/lib/elixir/
+rm -r /usr/local/bin/{elixir,elixirc,iex,mix}
+rm -r /usr/local/share/man/man1/{elixir,elixirc,iex,mix}.1
+

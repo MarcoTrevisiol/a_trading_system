@@ -8,6 +8,5 @@ release_dir="/srv/a-trading-system/releases/${relative_dir}"
 mkdir -p "${release_dir}/etc/"
 cp -a "${build_dir}/." "$release_dir"
 cp /etc/a-trading-system/environment-staging "${release_dir}/etc/environment"
-rm -f /srv/a-trading-system/staging
-ln -sf "releases/$relative_dir" /srv/a-trading-system/staging
+ln -sfn "releases/$relative_dir" /srv/a-trading-system/staging
 
