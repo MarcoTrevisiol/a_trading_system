@@ -62,7 +62,7 @@ defmodule Broker.Connectivity do
 
   # "Authorize to use the API" function, that stores the token using ETS
 
-  defp store_token() do
+  def store_token() do
     username = System.get_env("USERNAME")
     apiKey = System.get_env("API_KEY")
 
@@ -76,27 +76,13 @@ defmodule Broker.Connectivity do
 
     IO.inspect({endpoint() <> "/auth", body, headers})
     # Make HTTP request
-    case HTTPoison.post(endpoint() <> "/auth", body, headers) do
-      {:ok, %HTTPoison.Response{status_code: 200, body: response_body}} ->
-        case Jason.decode(response_body) do
-          {:ok, %{"token" => token}} ->
-            # Insert the token into the ETS table
-            init_ets()
-            :ets.insert(:token_storage, {:token, token})
-            {:ok, "Token stored successfully"}
-
-          {:ok, _} ->
-            {:error, "Token not found in the response"}
-
-          {:error, decode_error} ->
-            {:error, "Failed to decode response: #{inspect(decode_error)}"}
-        end
-
-      {:ok, %HTTPoison.Response{status_code: status_code}} ->
-        {:error, "Unexpected status code: #{status_code}"}
-
-      {:error, %HTTPoison.Error{reason: reason}} ->
-        {:error, "HTTP request failed: #{inspect(reason)}"}
+    with {:ok, %HTTPoison.Response{status_code: 200, body: response_body}} <-
+           HTTPoison.post(endpoint() <> "/auth", body, headers),
+         {:ok, %{"token" => token}} <-
+           Jason.decode(response_body) do
+      init_ets()
+      :ets.insert(:token_storage, {:token, token})
+      {:ok, "Token stored successfully"}
     end
   end
 
@@ -208,12 +194,15 @@ defmodule Broker.Connectivity do
 
   def get_last_price(symbol) do
     init_ets()
-    x = if get_token() == nil, do: {:ok, _} = store_token()
-    IO.inspect(x)
+    if get_token() == nil, do: {:ok, _} = store_token()
+    # IO.inspect(x)
     IO.inspect(get_token())
     result = get_quotes(symbol)
     IO.inspect(result)
 
-    {:error, :not_connected}
+    case result do
+      {:ok, %{"Quotes" => [%{"l" => last} | _]}} -> {:ok, last}
+      _ -> result
+    end
   end
 end

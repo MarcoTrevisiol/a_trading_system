@@ -105,13 +105,18 @@ defmodule BrokerDouble.FakeServer do
   #   __ MARKET __
   #
 
-  @create_data %{
-    "Quotes" => [%{s: "XCME:6E"}],
+  @market_data %{
+    "Quotes" => [%{s: "XCME:6E", l: 1000.0}],
     "status" => "OK",
     "message" => "String"
   }
 
   get "/market/quotes" do
-    Plug.Conn.send_resp(conn, 200, Jason.encode!(@create_data))
+    IO.inspect(conn.query_params)
+
+    case conn.query_params do
+      %{"symbols" => "XCME:6E"} -> Plug.Conn.send_resp(conn, 200, Jason.encode!(@market_data))
+      _ -> Plug.Conn.send_resp(conn, 400, Jason.encode!(%{}))
+    end
   end
 end

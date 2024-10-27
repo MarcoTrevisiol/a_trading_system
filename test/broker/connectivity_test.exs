@@ -30,9 +30,9 @@ defmodule Broker.ConnectivityTest do
     {:error, _reason} = Broker.Connectivity.get_last_price("WRONG:SYMBOL")
   end
 
-  @tag :skip
+  # @tag :skip
   test "get quotes returns quotes" do
-    {:ok, price} = Broker.Connectivity.get_last_price("XCME:ES.U16")
+    {:ok, price} = Broker.Connectivity.get_last_price("XCME:6E")
     assert is_float(price)
   end
 end
