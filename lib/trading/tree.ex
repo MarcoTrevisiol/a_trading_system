@@ -25,9 +25,9 @@ defmodule Trading.Tree do
   def types, do: @types
 
   # :input_type -> :output_type
-  defstruct [:map, :input_type, :output_type]
+  # defstruct [:map, :input_type, :output_type]
 
-  defstruct [:map, :type]
+  # defstruct [:map, :type]
 
   # a b + c +
   # :bar -> ... -> :bar -> :point
