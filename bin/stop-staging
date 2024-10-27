@@ -6,4 +6,5 @@ set -a
 
 . "${release_dir}/etc/environment"
 "${release_dir}/bin/a_trading_system" stop
+true
 
