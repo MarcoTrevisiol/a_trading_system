@@ -6,7 +6,7 @@ relative_dir="stag-$(date -u -Iminutes)"
 release_dir="/srv/a-trading-system/releases/${relative_dir}"
 
 mkdir -p "${release_dir}/etc/"
-cp -a "${build_dir}/." "$release_dir"
+cp -Rdl "${build_dir}/." "$release_dir"
 cp /etc/a-trading-system/environment-staging "${release_dir}/etc/environment"
 ln -sfn "releases/$relative_dir" /srv/a-trading-system/staging
 

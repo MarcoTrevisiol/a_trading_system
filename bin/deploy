@@ -1,11 +1,11 @@
 #!/bin/sh
 
-work_tree=/var/cache/a_trading_system
+work_tree=/var/cache/a-trading-system
 relative_dir="prod-$(date -u -Iminutes)"
 release_dir="/srv/a-trading-system/releases/${relative_dir}"
 
 mkdir -p "${release_dir}/etc/"
-cp -a "${work_tree}/_build/prod/rel/a_trading_system/." "$release_dir"
+cp -Rdl "${work_tree}/_build/prod/rel/a_trading_system/." "$release_dir"
 cp /etc/a-trading-system/environment-production "${release_dir}/etc/environment"
 ln -sfn "releases/$relative_dir" /srv/a-trading-system/current
 
