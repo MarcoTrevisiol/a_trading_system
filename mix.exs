@@ -10,7 +10,7 @@ defmodule ATradingSystem.MixProject do
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps(),
-      releases: [prod: [include_executable_for: [:unix]]]
+      releases: [a_trading_system: [include_executable_for: [:unix]]]
     ]
   end
 

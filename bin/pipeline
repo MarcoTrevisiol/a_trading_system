@@ -1,13 +1,12 @@
 #/bin/bash
 
-work_tree=/var/cache/a_trading_system/
+work_tree=/var/cache/a-trading-system/
 git_ref="${1:-main}"
-log_file=/var/log/git/"$(date -Iseconds)"
+log_file=/var/log/pipeline/"$(date -Iseconds)"
 
 (
 set -e
 
-mkdir -p "$work_tree"
 git --git-dir=/srv/git/a_trading_system.git/ --work-tree="$work_tree" checkout -f "$git_ref"
 cd "$work_tree"
 mix deps.get --only test
