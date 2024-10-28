@@ -4,7 +4,10 @@ release_dir=/srv/a-trading-system/staging
 
 set -a
 
+if [ -f "${release_dir}/etc/environment" ]
+then
 . "${release_dir}/etc/environment"
 "${release_dir}/bin/a_trading_system" stop
+fi
 true
 

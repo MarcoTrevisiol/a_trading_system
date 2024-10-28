@@ -1,40 +1,85 @@
 #!/bin/sh
 
-username="git"
-app_name="a_trading_system"
+set -v
+set -e
+
+deploy_user="deploy"
+repo_name="a_trading_system"
+app_name="a-trading-system"
+app_user="$app_name"
+app_group="$app_user"
 home_prefix="/var/lib"
 git_dir="/srv/git"
-log_dir="/var/log/${username}"
-home="${home_prefix}/${username}"
+log_dir="/var/log/pipeline"
+home="${home_prefix}/${deploy_user}"
+cache_dir="/var/cache/${app_name}"
+deploy_dir="/srv/${app_name}"
 
-# User creation
-adduser --system --group --home "$home" --no-create-home --shell /usr/bin/sh "$username"
+# Deploy user creation
+adduser --system --group --home "$home" --shell /usr/bin/sh "$deploy_user"
 
-# User home creation
+# Deploy user home creation
 mkdir -p "${home}/.ssh/"
+cat /home/*/.ssh/authorized_keys >"${home}/.ssh/authorized_keys"
 chmod 700 "${home}/.ssh/"
-touch "${home}/.ssh/authorized_keys"
 chmod 600 "${home}/.ssh/authorized_keys"
-chown -R "${username}:${username}" "${home}"
+chown -R "${deploy_user}:${deploy_user}" "${home}"
+
+# Cache creation
+mkdir -p "${cache_dir}/bin"
+cp pipeline "${cache_dir}/bin" 
+chown -R "${deploy_user}:${deploy_user}" "${cache_dir}"
 
 # Git dir creation
 mkdir -p "$git_dir"
-git init --bare "${git_dir}/${app_name}.git"
-cp update "${git_dir}/${app_name}.git/hooks/update" # maybe create script inline
-#cat >"${git_dir}/${app_name}.git/hooks/update" << EOF
-##!/bin/bash
-#
-#pipeline=/var/cache/a_trading_system/pipeline
-#
-#if [[ -f "$pipeline" && $1 =~ main ]]; then
-#	("$pipeline" main) >/dev/null 2>&1 &
-#fi
-#
-#EOF
+git init --bare --initial-branch main "${git_dir}/${repo_name}.git"
+cat >"${git_dir}/${repo_name}.git/hooks/update" << EOF
+#!/bin/bash
 
-chown -R "${username}:${username}" "$git_dir"
+pipeline=${cache_dir}/bin/pipeline
+
+if [[ -f "$pipeline" && $1 =~ main ]]; then
+	("$pipeline" main) >/dev/null 2>&1 &
+fi
+
+EOF
+chmod a+x "${git_dir}/${repo_name}.git/hooks/update"
+chown -R "${deploy_user}:${deploy_user}" "$git_dir"
 
 # Log dir creation
 mkdir -p "$log_dir"
-chown -R "${username}:${username}" "$log_dir"
+chown -R "${deploy_user}:${deploy_user}" "$log_dir"
+
+# App user creation
+adduser --system --group --no-create-home "$app_user"
+
+# Deploy dir creation and population
+mkdir -p "${deploy_dir}/"
+chown -R "${deploy_user}:${app_group}" "${deploy_dir}"
+
+# Sudoers
+cat >"/etc/sudoers.d/10-${deploy_user}-${app_name}" << EOF
+# allow "${deploy_user}" user to start/stop ${app_name}
+
+${deploy_user} ALL=(root) NOPASSWD: /bin/systemctl start ${app_name}, /bin/systemctl stop ${app_name}, /bin/systemctl restart ${app_name}
+EOF
+
+# Systemd integration
+cp "${app_name}.service" /etc/systemd/system/
+systemctl daemon-reload
+systemctl enable "${app_name}.service"
+
+exit 0
+
+# Ufw stuff
+apt install ufw
+ufw enable
+ufw allow 4000/tcp
+cat >>/etc/ufw/before.rules <<EOF
+*nat
+:PREROUTING ACCEPT [0:0]
+-A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 4000
+COMMIT
+EOF
+
 

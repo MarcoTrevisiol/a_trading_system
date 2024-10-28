@@ -1,2 +1,3 @@
+cd /tmp/elixir/
 (cd elixir-main-latest/ && make install)
 

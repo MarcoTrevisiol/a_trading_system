@@ -2,7 +2,7 @@
 
 build_dir=_build/prod/rel/a_trading_system
 
-relative_dir="staging-$(date -u -Iminutes)"
+relative_dir="stag-$(date -u -Iminutes)"
 release_dir="/srv/a-trading-system/releases/${relative_dir}"
 
 mkdir -p "${release_dir}/etc/"

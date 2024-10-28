@@ -1,3 +1,0 @@
-# allow "git" user to start/stop a-trading-system
-
-git ALL=(root) NOPASSWD: /bin/systemctl start a-trading-system, /bin/systemctl stop a-trading-system, /bin/systemctl restart a-trading-system
