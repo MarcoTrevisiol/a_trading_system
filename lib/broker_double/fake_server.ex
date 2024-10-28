@@ -9,26 +9,6 @@ defmodule BrokerDouble.FakeServer do
   plug :match
   plug :dispatch
 
-  post "/repos" do
-    case conn.params do
-      %{"name" => "success-repo"} ->
-        success(conn, %{"id" => 1234, "name" => "success-repo"})
-
-      %{"name" => "failed-repo"} ->
-        failure(conn)
-    end
-  end
-
-  defp success(conn, body) do
-    conn
-    |> Plug.Conn.send_resp(200, Jason.encode!(body))
-  end
-
-  defp failure(conn) do
-    conn
-    |> Plug.Conn.send_resp(422, Jason.encode!(%{message: "error message"}))
-  end
-
   #
   #   __ Authorisation __
   #
@@ -89,18 +69,70 @@ defmodule BrokerDouble.FakeServer do
   #   __ STREAMING __
   #
 
-  # Response to create a new Stream
+  @streamid "123e4567-e89b-12d3-a456-426614174000"
 
-  @create_data %{
-    "streamId" => "123e4567-e89b-12d3-a456-426614174000",
+  # "Create a streamId" responses
+
+  @create_stream_data %{
+    "streamId" => @streamid,
     "status" => "OK",
     "message" => "String"
   }
 
   get "/stream/create" do
-    Plug.Conn.send_resp(conn, 200, Jason.encode!(@create_data))
+    Plug.Conn.send_resp(conn, 200, Jason.encode!(@create_stream_data))
   end
 
+  # "Subscribe to quotes" responses
+
+  @subscribe_quotes_data %{
+    "status" => "OK",
+    "message" => "OK"
+  }
+
+  get "/market/quotes/subscribe/#{@streamid}" do
+    case conn.query_params do
+      %{"symbols" => _} ->
+        Plug.Conn.send_resp(conn, 200, Jason.encode!(@subscribe_quotes_data))
+
+      _ ->
+        Plug.Conn.send_resp(conn, 400, Jason.encode!(%{}))
+    end
+  end
+
+  # "Subscribe to depths" responses
+
+  @subscribe_depths_data %{
+    "status" => "OK",
+    "message" => "OK"
+  }
+
+  get "/market/depths/subscribe/#{@streamid}" do
+    case conn.query_params do
+      %{"symbols" => _} ->
+        Plug.Conn.send_resp(conn, 200, Jason.encode!(@subscribe_depths_data))
+
+      _ ->
+        Plug.Conn.send_resp(conn, 400, Jason.encode!(%{}))
+    end
+  end
+
+  # "Subscribe to trades" responses
+
+  @subscribe_trades_data %{
+    "status" => "OK",
+    "message" => "OK"
+  }
+
+  get "/market/trades/subscribe/#{@streamid}" do
+    case conn.query_params do
+      %{"symbols" => _} ->
+        Plug.Conn.send_resp(conn, 200, Jason.encode!(@subscribe_trades_data))
+
+      _ ->
+        Plug.Conn.send_resp(conn, 400, Jason.encode!(%{}))
+    end
+  end
   #
   #   __ MARKET __
   #
