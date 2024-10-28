@@ -21,43 +21,43 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 
 * Automate deployment to staging environment into the build system
 
-  [x] Decide which machine should exec the pipeline [see FHS](https://www.pathname.com/fhs/pub/fhs-2.3.html#SRVDATAFORSERVICESPROVIDEDBYSYSTEM)
-  [x] After push, a chain of work is done
-  [x] Task to rollback (on demand)
-  [x] Plug all deployment tasks in git hooks
-  [ ] Simplify deployment of git hooks
-  [ ] Consider setting up a new machine where to deploy
-  [x] Setting up git "server" on /srv/git/
+  - [x] Decide which machine should exec the pipeline [see FHS](https://www.pathname.com/fhs/pub/fhs-2.3.html#SRVDATAFORSERVICESPROVIDEDBYSYSTEM)
+  - [x] After push, a chain of work is done
+  - [x] Task to rollback (on demand)
+  - [x] Plug all deployment tasks in git hooks
+  - [ ] Simplify deployment of git hooks
+  - [ ] Consider setting up a new machine where to deploy
+  - [x] Setting up git "server" on /srv/git/
 
 * Create production environment
 
-  [x] Decide which machine or user should be responsible for keeping up production environment
-  [x] Examine systemd integration [starting here](https://elixirforum.com/t/elixir-apps-as-systemd-services-info-wiki/2400) and [here](https://serverfault.com/questions/413397/how-to-set-environment-variable-in-systemd-service)
-  [x] Serve on port 80
-  [x] Task to install
-  [ ] Task to uninstall
-  [x] Examine if mix releases are good enough
-  [ ] Create system user for the application
-  [ ] Use https
-  [~] log into /var/log/ directory
-  [ ] assure data are written in /var/local/ directory
-  [ ] change lib structure to clarify installations (e.g. in /usr/local/lib/)
+  - [x] Decide which machine or user should be responsible for keeping up production environment
+  - [x] Examine systemd integration [starting here](https://elixirforum.com/t/elixir-apps-as-systemd-services-info-wiki/2400) and [here](https://serverfault.com/questions/413397/how-to-set-environment-variable-in-systemd-service)
+  - [x] Serve on port 80
+  - [x] Task to install
+  - [ ] Task to uninstall
+  - [x] Examine if mix releases are good enough
+  - [ ] Create system user for the application
+  - [ ] Use https
+  - [~] log into /var/log/ directory
+  - [ ] assure data are written in /var/local/ directory
+  - [ ] change lib structure to clarify installations (e.g. in /usr/local/lib/)
 
 * Hardining CI/CD pipeline
 
-  [ ] mix format before commit
-  [ ] mix test before commit
-  [ ] mix test after integration
+  - [ ] mix format before commit
+  - [ ] mix test before commit
+  - [ ] mix test after integration
 
 * Automate deployment to new development environment
 
-  [ ] Simplify deployment of git hooks
-  [ ] Create environment on each developer workstation
-  [ ] Align dev and prod environments inside phx (leave all differences in environment vars)
+  - [ ] Simplify deployment of git hooks
+  - [ ] Create environment on each developer workstation
+  - [ ] Align dev and prod environments inside phx (leave all differences in environment vars)
 
 * Check if some dependencies can be removed
 
-  [ ] Fix gettext warning
+  - [ ] Fix gettext warning
 
 * Plug in broker api
 * Build fake trading system

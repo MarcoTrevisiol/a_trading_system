@@ -1,29 +1,6 @@
 defmodule Broker.Connectivity do
   @base_url Application.compile_env(:a_trading_system, :api_base_url)
 
-  def create_repo(params) do
-    HTTPoison.post(@base_url <> "/repos", Jason.encode!(params), headers())
-    |> handle_response
-  end
-
-  defp handle_response(resp) do
-    case resp do
-      {:ok, %{body: body, status_code: 200}} ->
-        body_map = Jason.decode!(body)
-        %{id: body_map["id"], name: body_map["name"]}
-
-      {:ok, %{body: body, status_code: 422}} ->
-        body_map = Jason.decode!(body)
-        %{error_message: body_map["message"]}
-    end
-  end
-
-  defp headers do
-    [{"Content-Type", "application/json"}]
-  end
-
-  defp endpoint, do: System.get_env("BROKER_ENDPOINT")
-
   #
   #   __ ETS __
   #
@@ -50,11 +27,59 @@ defmodule Broker.Connectivity do
   #   __ MISC __
   #
 
+  # Function to handle http errors. In case of unauthorized requestes, calls the funcion store_token.
+
+  defp handle_http_error({:ok, %HTTPoison.Response{status_code: status_code}}) do
+    case status_code do
+      400 ->
+        {:error, "400 Bad Request"}
+
+      401 ->
+        {:error, "401 Unauthorized - Token getting refreshed"}
+        store_token()
+
+      403 ->
+        {:error, "403 Forbidden"}
+
+      404 ->
+        {:error, "404 Not Found (trader not found)"}
+
+      406 ->
+        {:error, "406 Not Acceptable"}
+
+      429 ->
+        {:error, "429 Too Many Requests"}
+
+      500 ->
+        {:error, "500 Internal Server Error"}
+
+      _ ->
+        {:error, "Unhandled HTTP error with status code #{status_code}"}
+    end
+  end
+
+  defp handle_http_error({:error, %HTTPoison.Error{reason: error_reason}}) do
+    case error_reason do
+      :nxdomain ->
+        {:error, "Non Existent Domain"}
+
+      :timeout ->
+        {:error, "Timeout"}
+
+      _ ->
+        {:error, "HTTP request failed: #{inspect(error_reason)}"}
+    end
+  end
+
   # Function that return the headers for authorization using the token stored in the ET
 
   defp auth_head() do
     [{"Authorization", ["Bearer ", get_token()]}]
   end
+
+  # Function that return the Broker Endpoint
+
+  defp endpoint, do: System.get_env("BROKER_ENDPOINT")
 
   #
   #   __ AUTHORIZATION __
