@@ -38,8 +38,8 @@ cat >"${git_dir}/${repo_name}.git/hooks/update" << EOF
 
 pipeline=${cache_dir}/bin/pipeline
 
-if [[ -f "$pipeline" && $1 =~ main ]]; then
-	("$pipeline" main) >/dev/null 2>&1 &
+if [[ -f "\$pipeline" && $1 =~ main ]]; then
+	("\$pipeline" main) >/dev/null 2>&1 &
 fi
 
 EOF
