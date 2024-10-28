@@ -1,3 +1,9 @@
 defmodule Trading.Event do
-  defstruct [:type, :datetime]
+  defmodule DayEnded do
+    defstruct [:datetime]
+  end
+
+  defmodule OrderFilled do
+    defstruct [:datetime, :price, :order]
+  end
 end
