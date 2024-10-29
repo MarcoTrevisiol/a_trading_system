@@ -34,7 +34,6 @@ defmodule ATradingSystem.MixProject do
   defp deps do
     [
       # Phoenix deps
-
       {:phoenix, "~> 1.7.14"},
       {:phoenix_html, "~> 4.1"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
@@ -56,6 +55,7 @@ defmodule ATradingSystem.MixProject do
       {:jason, "~> 1.2"},
       {:bandit, "~> 1.5"},
       {:mix_test_watch, "~> 1.0", only: [:dev, :test], runtime: false},
+      {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
 
       # Deployment support for SystemD deps
       {:mix_systemd, "~> 0.1", only: :dev},
