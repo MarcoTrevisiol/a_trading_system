@@ -1,6 +1,6 @@
 defmodule Alternate do
   defp handle_event(
-         %Trading.Event{type: :day_ended, datetime: _datetime},
+         %Trading.Event.DayEnded{datetime: _datetime},
          %{day_number: day_number},
          _tactic_state
        ) do

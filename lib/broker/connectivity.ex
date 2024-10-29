@@ -1,6 +1,4 @@
 defmodule Broker.Connectivity do
-  @base_url Application.compile_env(:a_trading_system, :api_base_url)
-
   #
   #   __ ETS __
   #
@@ -29,7 +27,7 @@ defmodule Broker.Connectivity do
 
   # Function to handle http errors. In case of unauthorized requestes, calls the funcion store_token.
 
-  defp handle_http_error({:ok, %HTTPoison.Response{status_code: status_code}}) do
+  def handle_http_error({:ok, %HTTPoison.Response{status_code: status_code}}) do
     case status_code do
       400 ->
         {:error, "400 Bad Request"}
@@ -58,7 +56,7 @@ defmodule Broker.Connectivity do
     end
   end
 
-  defp handle_http_error({:error, %HTTPoison.Error{reason: error_reason}}) do
+  def handle_http_error({:error, %HTTPoison.Error{reason: error_reason}}) do
     case error_reason do
       :nxdomain ->
         {:error, "Non Existent Domain"}
@@ -113,7 +111,7 @@ defmodule Broker.Connectivity do
 
   # "Logout user" function
 
-  defp logout() do
+  def logout() do
     case HTTPoison.post(endpoint() <> "/logout", auth_head()) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         case Jason.decode(body) do
@@ -141,7 +139,7 @@ defmodule Broker.Connectivity do
 
   # "Get trader info" function
 
-  defp get_trader_info() do
+  def get_trader_info() do
     url = "#{endpoint()}/info/trader"
 
     case HTTPoison.get(url, auth_head()) do
