@@ -20,12 +20,9 @@ defmodule ATradingSystem.MixProject do
   def application do
     [
       mod: {ATradingSystem.Application, []},
-      extra_applications: [:logger, :runtime_tools, :cowboy]
+      extra_applications: [:logger, :runtime_tools]
     ]
   end
-
-  # defp applications(:test), do: applications(:default) ++ [:httpoison, :cowboy]
-  # defp applications(_), do: applications(:default) ++ [:httpoison]
 
   # Specifies which paths to compile per environment.
   defp elixirc_paths(:test), do: ["lib", "test/support"]
@@ -67,8 +64,7 @@ defmodule ATradingSystem.MixProject do
       {:httpoison, "~> 2.0"},
 
       # Mock Server deps
-      {:dialyxir, "~> 0.5", only: [:dev], runtime: false},
-      {:plug_cowboy, "~> 2.0"}
+      {:dialyxir, "~> 0.5", only: [:dev], runtime: false}
     ]
   end
 

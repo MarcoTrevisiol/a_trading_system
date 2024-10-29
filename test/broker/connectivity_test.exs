@@ -3,7 +3,7 @@ defmodule Broker.ConnectivityTest do
 
   setup do
     start_supervised(
-      {Plug.Cowboy, scheme: :http, plug: BrokerDouble.FakeServer, options: [port: 8081]}
+      {Bandit, scheme: :http, plug: BrokerDouble.FakeServer, port: 8081}
     )
 
     :ok
