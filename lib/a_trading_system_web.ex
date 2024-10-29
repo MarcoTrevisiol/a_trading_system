@@ -43,7 +43,6 @@ defmodule ATradingSystemWeb do
         layouts: [html: ATradingSystemWeb.Layouts]
 
       import Plug.Conn
-      import ATradingSystemWeb.Gettext
 
       unquote(verified_routes())
     end
@@ -85,7 +84,6 @@ defmodule ATradingSystemWeb do
       import Phoenix.HTML
       # Core UI components and translation
       import ATradingSystemWeb.CoreComponents
-      import ATradingSystemWeb.Gettext
 
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS
