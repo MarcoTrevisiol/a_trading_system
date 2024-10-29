@@ -38,7 +38,6 @@ defmodule ATradingSystemWeb.Router do
       pipe_through :browser
 
       live_dashboard "/dashboard", metrics: ATradingSystemWeb.Telemetry
-      forward "/mailbox", Plug.Swoosh.MailboxPreview
     end
   end
 end
