@@ -133,6 +133,7 @@ defmodule BrokerDouble.FakeServer do
         Plug.Conn.send_resp(conn, 400, Jason.encode!(%{}))
     end
   end
+
   #
   #   __ MARKET __
   #

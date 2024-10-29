@@ -37,7 +37,7 @@ if config_env() == :prod do
   port = String.to_integer(System.get_env("PORT") || "4000")
 
   config :a_trading_system, ATradingSystemWeb.Endpoint,
-    http: [ host: host, port: port ],
+    http: [host: host, port: port],
     secret_key_base: secret_key_base
 
   # ## SSL Support
