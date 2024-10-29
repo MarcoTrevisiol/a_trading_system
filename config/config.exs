@@ -24,15 +24,6 @@ config :a_trading_system, ATradingSystemWeb.Endpoint,
   pubsub_server: ATradingSystem.PubSub,
   live_view: [signing_salt: "gM8h9+M5"]
 
-# Configures the mailer
-#
-# By default it uses the "Local" adapter which stores the emails
-# locally. You can see the emails in your browser, at "/dev/mailbox".
-#
-# For production it's recommended to configure a different adapter
-# at the `config/runtime.exs`.
-config :a_trading_system, ATradingSystem.Mailer, adapter: Swoosh.Adapters.Local
-
 # Configure esbuild (the version is required)
 config :esbuild,
   version: "0.17.11",

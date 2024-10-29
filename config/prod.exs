@@ -9,12 +9,6 @@ config :a_trading_system, ATradingSystemWeb.Endpoint,
   server: true,
   cache_static_manifest: "priv/static/cache_manifest.json"
 
-# Configures Swoosh API Client
-config :swoosh, api_client: Swoosh.ApiClient.Finch, finch_name: ATradingSystem.Finch
-
-# Disable Swoosh Local Memory Storage
-config :swoosh, local: false
-
 # Do not print debug messages in production
 config :logger, level: :info
 

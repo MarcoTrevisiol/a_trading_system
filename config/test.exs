@@ -7,12 +7,6 @@ config :a_trading_system, ATradingSystemWeb.Endpoint,
   secret_key_base: "KtiVW75skobx74nyM9dImpLnmCs+24DjuTqhhdIs0B8/Y1pgwLcJ6UjdohtL3zfk",
   server: false
 
-# In test we don't send emails
-config :a_trading_system, ATradingSystem.Mailer, adapter: Swoosh.Adapters.Test
-
-# Disable swoosh api client as it is only required for production adapters
-config :swoosh, :api_client, false
-
 # Print only warnings and errors during test
 config :logger, level: :warning
 
