@@ -29,10 +29,14 @@ defmodule BrokerDouble.FakeServer do
   post "/auth" do
     case conn.params do
       %{} ->
-        Plug.Conn.send_resp(conn, 200, Jason.encode!(@success_body))
+        conn
+        |> put_resp_content_type("application/json")
+        |> send_resp(200, Jason.encode!(@success_body))
 
       _ ->
-        Plug.Conn.send_resp(conn, 400, Jason.encode!(@failure_body))
+        conn
+        |> put_resp_content_type("application/json")
+        |> send_resp(400, Jason.encode!(@failure_body))
     end
   end
 
@@ -43,7 +47,9 @@ defmodule BrokerDouble.FakeServer do
     "message" => "OK"
   }
   post "/logout" do
-    Plug.Conn.send_resp(conn, 200, Jason.encode!(@logout_data))
+    conn
+    |> put_resp_content_type("application/json")
+    |> send_resp(200, Jason.encode!(@logout_data))
   end
 
   #
@@ -62,7 +68,9 @@ defmodule BrokerDouble.FakeServer do
     "traderId" => "5123345"
   }
   get "/info/trader" do
-    Plug.Conn.send_resp(conn, 200, Jason.encode!(@trader_data))
+    conn
+    |> put_resp_content_type("application/json")
+    |> send_resp(200, Jason.encode!(@trader_data))
   end
 
   #
@@ -80,7 +88,9 @@ defmodule BrokerDouble.FakeServer do
   }
 
   get "/stream/create" do
-    Plug.Conn.send_resp(conn, 200, Jason.encode!(@create_stream_data))
+    conn
+    |> put_resp_content_type("application/json")
+    |> send_resp(200, Jason.encode!(@create_stream_data))
   end
 
   # "Subscribe to quotes" responses
@@ -93,10 +103,14 @@ defmodule BrokerDouble.FakeServer do
   get "/market/quotes/subscribe/#{@streamid}" do
     case conn.query_params do
       %{"symbols" => _} ->
-        Plug.Conn.send_resp(conn, 200, Jason.encode!(@subscribe_quotes_data))
+        conn
+        |> put_resp_content_type("application/json")
+        |> send_resp(200, Jason.encode!(@subscribe_quotes_data))
 
       _ ->
-        Plug.Conn.send_resp(conn, 400, Jason.encode!(%{}))
+        conn
+        |> put_resp_content_type("application/json")
+        |> send_resp(400, Jason.encode!(%{}))
     end
   end
 
@@ -110,10 +124,14 @@ defmodule BrokerDouble.FakeServer do
   get "/market/depths/subscribe/#{@streamid}" do
     case conn.query_params do
       %{"symbols" => _} ->
-        Plug.Conn.send_resp(conn, 200, Jason.encode!(@subscribe_depths_data))
+        conn
+        |> put_resp_content_type("application/json")
+        |> send_resp(200, Jason.encode!(@subscribe_depths_data))
 
       _ ->
-        Plug.Conn.send_resp(conn, 400, Jason.encode!(%{}))
+        conn
+        |> put_resp_content_type("application/json")
+        |> send_resp(400, Jason.encode!(%{}))
     end
   end
 
@@ -127,12 +145,17 @@ defmodule BrokerDouble.FakeServer do
   get "/market/trades/subscribe/#{@streamid}" do
     case conn.query_params do
       %{"symbols" => _} ->
-        Plug.Conn.send_resp(conn, 200, Jason.encode!(@subscribe_trades_data))
+        conn
+        |> put_resp_content_type("application/json")
+        |> send_resp(200, Jason.encode!(@subscribe_trades_data))
 
       _ ->
-        Plug.Conn.send_resp(conn, 400, Jason.encode!(%{}))
+        conn
+        |> put_resp_content_type("application/json")
+        |> send_resp(400, Jason.encode!(%{}))
     end
   end
+
   #
   #   __ MARKET __
   #
@@ -147,8 +170,15 @@ defmodule BrokerDouble.FakeServer do
     IO.inspect(conn.query_params)
 
     case conn.query_params do
-      %{"symbols" => "XCME:6E"} -> Plug.Conn.send_resp(conn, 200, Jason.encode!(@market_data))
-      _ -> Plug.Conn.send_resp(conn, 400, Jason.encode!(%{}))
+      %{"symbols" => "XCME:6E"} ->
+        conn
+        |> put_resp_content_type("application/json")
+        |> send_resp(200, Jason.encode!(@market_data))
+
+      _ ->
+        conn
+        |> put_resp_content_type("application/json")
+        |> send_resp(400, Jason.encode!(%{}))
     end
   end
 end
