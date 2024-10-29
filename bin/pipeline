@@ -10,12 +10,12 @@ set -e
 git --git-dir=/srv/git/a_trading_system.git/ --work-tree="$work_tree" checkout -f "$git_ref"
 cd "$work_tree"
 mix deps.get --only test
+export SECRET_KEY_BASE=$(MIX_ENV=prod mix phx.gen.secret)
 export BROKER_ENDPOINT="http://localhost:8081"
 MIX_ENV=test mix test
 unset BROKER_ENDPOINT
 
 mix deps.get --only prod
-export SECRET_KEY_BASE=$(MIX_ENV=prod mix phx.gen.secret)
 MIX_ENV=prod mix assets.deploy
 MIX_ENV=prod mix release --overwrite
 "${work_tree}/bin/stop-staging"

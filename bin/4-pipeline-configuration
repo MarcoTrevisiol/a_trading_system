@@ -78,7 +78,7 @@ ufw allow 4000/tcp
 cat >>/etc/ufw/before.rules <<EOF
 *nat
 :PREROUTING ACCEPT [0:0]
--A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 4000
+-A PREROUTING -p tcp --dport 443 -j REDIRECT --to-port 4000
 COMMIT
 EOF
 
