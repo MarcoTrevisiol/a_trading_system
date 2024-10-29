@@ -67,7 +67,7 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 ## To Learn
 
 * Configuration of phoenix project
-* MinimumCD guides
+* MinimumCD guides (https://minimumcd.org/minimumcd/)
 * Phoenix guides
 * Unix operating system and shell
 * elixir json api client
