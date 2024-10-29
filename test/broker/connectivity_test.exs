@@ -3,7 +3,7 @@ defmodule Broker.ConnectivityTest do
 
   setup do
     start_supervised({Bandit, scheme: :http, plug: BrokerDouble.FakeServer, port: 8081})
-
+    Broker.Connectivity.store_token()
     :ok
   end
 
