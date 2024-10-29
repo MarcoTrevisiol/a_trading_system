@@ -12,7 +12,6 @@ config :a_trading_system,
 
 # Configures the endpoint
 config :a_trading_system, ATradingSystemWeb.Endpoint,
-  http: [ip: {0, 0, 0, 0}, port: 4000],
   check_origin: false,
   debug_errors: true,
   url: [host: "localhost"],
@@ -73,4 +72,4 @@ config :a_trading_system, api_base_url: "http://localhost:8081"
 config :a_trading_system, dev_routes: true
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
-import_config "#{config_env()}.exs"
+if config_env() == :dev, do: import_config("#{config_env()}.exs")

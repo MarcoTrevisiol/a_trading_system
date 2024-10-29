@@ -11,6 +11,11 @@ config :a_trading_system, ATradingSystemWeb.Endpoint,
   watchers: [
     esbuild: {Esbuild, :install_and_run, [:a_trading_system, ~w(--sourcemap=inline --watch)]},
     tailwind: {Tailwind, :install_and_run, [:a_trading_system, ~w(--watch)]}
+  ],
+  https: [
+    cipher_suite: :strong,
+    keyfile: "priv/cert/selfsigned_key.pem",
+    certfile: "priv/cert/selfsigned.pem"
   ]
 
 # ## SSL Support
