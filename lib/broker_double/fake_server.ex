@@ -167,8 +167,6 @@ defmodule BrokerDouble.FakeServer do
   }
 
   get "/market/quotes" do
-    IO.inspect(conn.query_params)
-
     case conn.query_params do
       %{"symbols" => "XCME:6E"} ->
         conn

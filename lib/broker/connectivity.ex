@@ -5,7 +5,7 @@ defmodule Broker.Connectivity do
 
   # Function to initialize the ETS table, making sure that it doesn't already exist
 
-  defp init_ets() do
+  defp init_ets do
     case :ets.whereis(:token_storage) do
       :undefined -> :ets.new(:token_storage, [:private, :set, :named_table])
       tid when is_reference(tid) -> tid
@@ -14,9 +14,9 @@ defmodule Broker.Connectivity do
 
   # Function to retrieve the token stored using ETS
 
-  defp get_token() do
+  defp get_token do
     case :ets.lookup(:token_storage, :token) do
-      [{:token, token}] -> IO.inspect(token)
+      [{:token, token}] -> token
       [] -> nil
     end
   end
@@ -71,7 +71,7 @@ defmodule Broker.Connectivity do
 
   # Function that return the headers for authorization using the token stored in the ET
 
-  defp auth_head() do
+  defp auth_head do
     [{"Authorization", ["Bearer ", get_token()]}]
   end
 
@@ -85,7 +85,7 @@ defmodule Broker.Connectivity do
 
   # "Authorize to use the API" function, that stores the token using ETS
 
-  def store_token() do
+  def store_token do
     username = System.get_env("USERNAME")
     apiKey = System.get_env("API_KEY")
 
@@ -97,7 +97,6 @@ defmodule Broker.Connectivity do
     body = Jason.encode!(payload)
     headers = [{"Content-Type", "application/json"}]
 
-    IO.inspect({endpoint() <> "/auth", body, headers})
     # Make HTTP request
     with {:ok, %HTTPoison.Response{status_code: 200, body: response_body}} <-
            HTTPoison.post(endpoint() <> "/auth", body, headers),
@@ -111,7 +110,7 @@ defmodule Broker.Connectivity do
 
   # "Logout user" function
 
-  def logout() do
+  def logout do
     case HTTPoison.post(endpoint() <> "/logout", auth_head()) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         case Jason.decode(body) do
@@ -139,7 +138,7 @@ defmodule Broker.Connectivity do
 
   # "Get trader info" function
 
-  def get_trader_info() do
+  def get_trader_info do
     url = "#{endpoint()}/info/trader"
 
     case HTTPoison.get(url, auth_head()) do
@@ -209,7 +208,7 @@ defmodule Broker.Connectivity do
 
   # "Create a streamId" function
 
-  def create_streamId() do
+  def create_streamId do
     HTTPoison.get(endpoint() <> "/stream/create", auth_head())
   end
 
@@ -218,10 +217,7 @@ defmodule Broker.Connectivity do
   def get_last_price(symbol) do
     init_ets()
     if get_token() == nil, do: {:ok, _} = store_token()
-    # IO.inspect(x)
-    IO.inspect(get_token())
     result = get_quotes(symbol)
-    IO.inspect(result)
 
     case result do
       {:ok, %{"Quotes" => [%{"l" => last} | _]}} -> {:ok, last}
