@@ -6,7 +6,7 @@ release_dir="/srv/a-trading-system/releases/${relative_dir}"
 
 mkdir -p "${release_dir}/etc/"
 cp -Rdl "${work_tree}/_build/prod/rel/a_trading_system/." "$release_dir"
-cp /etc/a-trading-system/environment-production "${release_dir}/etc/environment"
+cp /etc/a-trading-system/prod-env "${release_dir}/etc/environment"
 ln -sfn "releases/$relative_dir" /srv/a-trading-system/current
 
 sudo /bin/systemctl restart a-trading-system
