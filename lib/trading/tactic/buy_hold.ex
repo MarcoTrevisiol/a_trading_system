@@ -1,11 +1,10 @@
 defmodule BuyHold do
   defp handle_event(
          %Trading.Event.DayEnded{datetime: _datetime},
-         %{day_number: day_number},
+         %{day_number: _day_number},
          _tactic_state
        ) do
-      %Trading.Orders.Market{symbol: nil, quantity: 1}
-    end
+    %Trading.Orders.Market{symbol: nil, quantity: 1}
   end
 
   def tactic do
