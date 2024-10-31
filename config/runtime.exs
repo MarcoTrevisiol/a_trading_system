@@ -25,14 +25,8 @@ end
 # want to use a different value for prod and you most likely don't want
 # to check this value into version control, so we use an environment
 # variable instead.
-secret_key_base =
-  System.get_env("SECRET_KEY_BASE") ||
-    raise """
-    environment variable SECRET_KEY_BASE is missing.
-    You can generate one by calling: mix phx.gen.secret
-    """
-
-port = String.to_integer(System.get_env("PORT") || "4000")
+secret_key_base = System.fetch_env!("SECRET_KEY_BASE")
+port = String.to_integer(System.get_env("PORT", "4000"))
 
 config :a_trading_system, ATradingSystemWeb.Endpoint,
   secret_key_base: secret_key_base,
@@ -53,7 +47,12 @@ config :a_trading_system, ATradingSystemWeb.Endpoint,
   https: [
     port: port,
     cipher_suite: :strong,
-    keyfile: System.get_env("SSL_KEY_PATH"),
-    certfile: System.get_env("SSL_CERT_PATH")
+    keyfile: System.fetch_env!("SSL_KEY_PATH"),
+    certfile: System.fetch_env!("SSL_CERT_PATH")
   ],
   force_ssl: [hsts: true]
+
+config :a_trading_system,
+  broker_endpoint: System.fetch_env!("BROKER_ENDPOINT"),
+  broker_username: System.fetch_env!("USERNAME"),
+  broker_api_key: System.fetch_env!("API_KEY")

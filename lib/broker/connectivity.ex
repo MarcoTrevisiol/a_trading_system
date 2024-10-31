@@ -77,7 +77,7 @@ defmodule Broker.Connectivity do
 
   # Function that return the Broker Endpoint
 
-  defp endpoint, do: System.get_env("BROKER_ENDPOINT")
+  defp endpoint, do: Application.fetch_env!(:a_trading_system, :broker_endpoint)
 
   #
   #   __ AUTHORIZATION __
@@ -86,8 +86,8 @@ defmodule Broker.Connectivity do
   # "Authorize to use the API" function, that stores the token using ETS
 
   def store_token do
-    username = System.get_env("USERNAME")
-    apiKey = System.get_env("API_KEY")
+    username = Application.fetch_env!(:a_trading_system, :broker_username)
+    apiKey = Application.fetch_env!(:a_trading_system, :broker_api_key)
 
     payload = %{
       "Username" => to_string(username),
