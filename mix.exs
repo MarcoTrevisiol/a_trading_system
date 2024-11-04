@@ -56,6 +56,7 @@ defmodule ATradingSystem.MixProject do
       {:bandit, "~> 1.5"},
       {:mix_test_watch, "~> 1.0", only: [:dev, :test], runtime: false},
       {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
+      {:credo_naming, "~> 2.1", only: [:dev, :test], runtime: false},
 
       # Deployment support for SystemD deps
       {:mix_systemd, "~> 0.1", only: :dev},
