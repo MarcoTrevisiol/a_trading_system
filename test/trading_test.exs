@@ -7,7 +7,7 @@ defmodule Trading.Tests do
     _orders = Trading.process_event(event, strategy)
   end
 
-  @tag :skip
+  # @tag :skip
   test "work on real data" do
     prices_filename = "test/nq.csv"
 
