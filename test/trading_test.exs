@@ -7,6 +7,30 @@ defmodule Trading.Tests do
     _orders = Trading.process_event(event, strategy)
   end
 
+  test "marketplace knows day number" do
+    info_queried = [:day_number]
+    initial_state = Trading.MarketState.initial_state(info_queried)
+    info = Trading.MarketState.query(initial_state, info_queried)
+    assert info == %{day_number: 0}
+
+    candlestick = %CandleStick{}
+    state = Trading.MarketState.receive(initial_state, candlestick)
+    info = Trading.MarketState.query(state, info_queried)
+    assert info == %{day_number: 1}
+  end
+
+  test "marketplace knows last close" do
+    info_queried = [:close]
+    initial_state = Trading.MarketState.initial_state(info_queried)
+    info = Trading.MarketState.query(initial_state, info_queried)
+    assert info == %{close: nil}
+
+    candlestick = %CandleStick{close: 57}
+    state = Trading.MarketState.receive(initial_state, candlestick)
+    info = Trading.MarketState.query(state, info_queried)
+    assert info == %{close: 57}
+  end
+
   @tag :skip
   test "work on real data" do
     prices_filename = "test/nq.csv"
