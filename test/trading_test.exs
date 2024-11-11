@@ -38,7 +38,7 @@ defmodule Trading.Tests do
     net_return =
       Trading.compute_net_return(
         strategy: %Trading.Strategy{
-          substrategies: %Trading.Strategy.WeightedStrategy{weight: 1, substrategy: Alternate}
+          substrategies: [%Trading.Strategy.WeightedStrategy{weight: 1, substrategy: Alternate}]
         },
         data_source: prices_filename
       )
@@ -52,12 +52,20 @@ defmodule Trading.Tests do
     compute_fn = fn ->
       Trading.compute_net_return(
         strategy: %Trading.Strategy{
-          substrategies: %Trading.Strategy.WeightedStrategy{weight: 1, substrategy: Alternate}
+          substrategies: [%Trading.Strategy.WeightedStrategy{weight: 1, substrategy: Alternate}]
         },
         data_source: invalid_data_source
       )
     end
 
     assert_raise File.Error, compute_fn
+  end
+
+  test "strategy knows info of its tactics" do
+    strategy = %Trading.Strategy{
+      substrategies: [%Trading.Strategy.WeightedStrategy{weight: 1, substrategy: Alternate}]
+    }
+
+    assert Trading.Strategy.info(strategy) == [:day_number]
   end
 end

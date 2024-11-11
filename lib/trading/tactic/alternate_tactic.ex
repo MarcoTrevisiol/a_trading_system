@@ -12,7 +12,7 @@ defmodule Alternate do
 
   def tactic do
     %Trading.Tactic{
-      handle_event: fn e, ms, ts -> handle_event(e, ms, ts) end,
+      handle_event: &handle_event/3,
       info: [:day_number],
       risk: 1
     }
