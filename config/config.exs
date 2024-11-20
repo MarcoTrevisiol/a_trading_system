@@ -66,7 +66,7 @@ config :phoenix, :json_library, Jason
 config :phoenix, :plug_init_mode, :runtime
 
 # FakeServer for test broker connectivity
-config :a_trading_system, api_base_url: "http://localhost:8081"
+config :a_trading_system, api_base_url: "http://localhost:8001"
 
 # Enable dev routes for dashboard and mailbox
 config :a_trading_system, dev_routes: true

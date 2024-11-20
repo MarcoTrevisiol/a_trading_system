@@ -2,7 +2,7 @@ defmodule Broker.ConnectivityTest do
   use ExUnit.Case, async: false
 
   setup do
-    start_supervised({Bandit, scheme: :http, plug: BrokerDouble.FakeServer, port: 8081})
+    start_supervised({Bandit, scheme: :http, plug: BrokerDouble.FakeServer, port: 8001})
     Broker.Connectivity.store_token()
     :ok
   end
