@@ -5,6 +5,7 @@ defmodule ATradingSystemWeb.Endpoint.Test do
   test "certification" do
     clean_restart(ATradingSystemWeb.Endpoint)
     cert = get_cert(ATradingSystemWeb.Endpoint)
-    assert cert.domains == ~w/mysite.com www.mysite.com/
+    domain = System.fetch_env!("CERT_DOMAIN")
+    assert cert.domains == [domain]
   end
 end
