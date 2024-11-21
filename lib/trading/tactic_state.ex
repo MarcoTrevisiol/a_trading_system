@@ -1,2 +1,3 @@
-defmodule Trading.TaticState do
+defmodule Trading.TacticState do
+  @moduledoc false
 end

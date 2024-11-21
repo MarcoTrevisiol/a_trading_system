@@ -1,4 +1,4 @@
-defmodule Trading.Tests do
+defmodule TradingTest do
   use ExUnit.Case
 
   test "process single event" do
@@ -38,7 +38,9 @@ defmodule Trading.Tests do
     net_return =
       Trading.compute_net_return(
         strategy: %Trading.Strategy{
-          substrategies: [%Trading.Strategy.WeightedStrategy{weight: 1, substrategy: Alternate}]
+          substrategies: [
+            %Trading.Strategy.WeightedStrategy{weight: 1, substrategy: Trading.Tactic.Alternate}
+          ]
         },
         data_source: prices_filename
       )
@@ -52,7 +54,9 @@ defmodule Trading.Tests do
     compute_fn = fn ->
       Trading.compute_net_return(
         strategy: %Trading.Strategy{
-          substrategies: [%Trading.Strategy.WeightedStrategy{weight: 1, substrategy: Alternate}]
+          substrategies: [
+            %Trading.Strategy.WeightedStrategy{weight: 1, substrategy: Trading.Tactic.Alternate}
+          ]
         },
         data_source: invalid_data_source
       )
@@ -63,7 +67,9 @@ defmodule Trading.Tests do
 
   test "strategy knows info of its tactics" do
     strategy = %Trading.Strategy{
-      substrategies: [%Trading.Strategy.WeightedStrategy{weight: 1, substrategy: Alternate}]
+      substrategies: [
+        %Trading.Strategy.WeightedStrategy{weight: 1, substrategy: Trading.Tactic.Alternate}
+      ]
     }
 
     assert Trading.Strategy.info(strategy) == [:day_number]

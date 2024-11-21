@@ -1,4 +1,5 @@
 defmodule BrokerDouble.FakeServer do
+  @moduledoc "Fake server for testing broker connectivity"
   use Plug.Router
 
   plug Plug.Parsers,

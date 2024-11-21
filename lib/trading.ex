@@ -1,14 +1,18 @@
 defmodule CandleStick do
+  @moduledoc "A CandleStick aggregates prices in a bar"
   defstruct [:date, :open, :high, :low, :close]
 end
 
 defmodule Trading do
+  @moduledoc """
+  Main entry point.....
+  """
   def process_event(_event, _strategy) do
   end
 
+  alias NimbleCSV.RFC4180, as: CSV
   alias Trading.MarketState
   alias Trading.Strategy
-  alias NimbleCSV.RFC4180, as: CSV
 
   def compute_net_return(strategy: strategy, data_source: data_source) do
     info_for_strategy = Trading.Strategy.info(strategy)
@@ -24,7 +28,6 @@ defmodule Trading do
     |> CSV.parse_stream()
     |> Stream.map(&parse_candlestick/1)
     |> Enum.reduce(initial_global_state, &reduce_step/2)
-    |> IO.inspect()
   end
 
   defp reduce_step(candlestick, %{strategy: strategy, market_state: market_state} = state) do

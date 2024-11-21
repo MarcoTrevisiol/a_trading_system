@@ -1,4 +1,6 @@
-defmodule Alternate do
+defmodule Trading.Tactic.Alternate do
+  @moduledoc "Dummy tactic which alternate long and short position every market day"
+
   defp handle_event(
          %Trading.Event.DayEnded{datetime: _datetime},
          %{day_number: day_number},

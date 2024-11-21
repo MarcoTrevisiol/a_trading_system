@@ -1,4 +1,6 @@
-defmodule BuyHold do
+defmodule Trading.Tactic.BuyHold do
+  @moduledoc "Basic tactic which just buy and hold a security"
+
   defp handle_event(
          %Trading.Event.DayEnded{datetime: _datetime},
          %{day_number: _day_number},

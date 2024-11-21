@@ -1,4 +1,5 @@
 defmodule Broker.Connectivity do
+  @moduledoc false
   #
   #   __ ETS __
   #
@@ -87,11 +88,11 @@ defmodule Broker.Connectivity do
 
   def store_token do
     username = Application.fetch_env!(:a_trading_system, :broker_username)
-    apiKey = Application.fetch_env!(:a_trading_system, :broker_api_key)
+    api_key = Application.fetch_env!(:a_trading_system, :broker_api_key)
 
     payload = %{
       "Username" => to_string(username),
-      "ApiKey" => to_string(apiKey)
+      "ApiKey" => to_string(api_key)
     }
 
     body = Jason.encode!(payload)
@@ -208,7 +209,7 @@ defmodule Broker.Connectivity do
 
   # "Create a streamId" function
 
-  def create_streamId do
+  def create_stream_id do
     HTTPoison.get(endpoint() <> "/stream/create", auth_head())
   end
 

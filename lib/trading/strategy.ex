@@ -1,8 +1,15 @@
 defmodule Trading.Strategy do
+  @moduledoc """
+  A strategy is a recursively nested container for tactics.
+
+  This module handle all possible events for a strategy.
+  It also knows the info required by a strategy.
+  """
   alias Trading.MarketState
   defstruct substrategies: []
 
   defmodule WeightedStrategy do
+    @moduledoc "pair of a strategy and a weight for definition of weighted strategies"
     defstruct [:substrategy, weight: 1]
   end
 
