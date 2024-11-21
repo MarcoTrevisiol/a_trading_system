@@ -1,4 +1,4 @@
-defmodule ATradingSystemWeb.PageController do
+defmodule ATradingSystemWeb.Controllers.PageController do
   use ATradingSystemWeb, :controller
 
   def home(conn, _params) do

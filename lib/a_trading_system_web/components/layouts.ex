@@ -1,4 +1,4 @@
-defmodule ATradingSystemWeb.Layouts do
+defmodule ATradingSystemWeb.Components.Layouts do
   @moduledoc """
   This module holds different layouts used by your application.
 

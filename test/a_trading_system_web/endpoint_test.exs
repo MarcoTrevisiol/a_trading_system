@@ -1,4 +1,4 @@
-defmodule ATradingSystemWeb.Endpoint.Test do
+defmodule ATradingSystemWeb.EndpointTest do
   use ExUnit.Case, async: false
   import SiteEncrypt.Phoenix.Test
 

@@ -1,5 +1,5 @@
-defmodule ATradingSystemWeb.PageControllerTest do
-  use ATradingSystemWeb.ConnCase
+defmodule ATradingSystemWeb.Controllers.PageControllerTest do
+  use Support.ConnCase
 
   test "GET /", %{conn: conn} do
     conn = get(conn, ~p"/")

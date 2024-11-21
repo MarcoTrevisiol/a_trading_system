@@ -1,5 +1,5 @@
 defmodule ATradingSystemWeb.ErrorHTMLTest do
-  use ATradingSystemWeb.ConnCase, async: true
+  use Support.ConnCase, async: true
 
   # Bring render_to_string/4 for testing custom views
   import Phoenix.Template

@@ -1,4 +1,4 @@
-defmodule ATradingSystemWeb.PageHTML do
+defmodule ATradingSystemWeb.Controllers.PageHTML do
   @moduledoc """
   This module contains pages rendered by PageController.
 

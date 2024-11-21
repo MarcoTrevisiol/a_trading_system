@@ -1,11 +1,12 @@
 defmodule ATradingSystemWeb.Router do
   use ATradingSystemWeb, :router
+  alias Controllers.PageController
 
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_live_flash
-    plug :put_root_layout, html: {ATradingSystemWeb.Layouts, :root}
+    plug :put_root_layout, html: {ATradingSystemWeb.Components.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
   end

@@ -1,5 +1,5 @@
 defmodule ATradingSystemWeb.ErrorJSONTest do
-  use ATradingSystemWeb.ConnCase, async: true
+  use Support.ConnCase, async: true
 
   test "renders 404" do
     assert ATradingSystemWeb.ErrorJSON.render("404.json", %{}) == %{

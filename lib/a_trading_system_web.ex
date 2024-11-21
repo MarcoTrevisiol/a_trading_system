@@ -40,7 +40,7 @@ defmodule ATradingSystemWeb do
     quote do
       use Phoenix.Controller,
         formats: [:html, :json],
-        layouts: [html: ATradingSystemWeb.Layouts]
+        layouts: [html: ATradingSystemWeb.Components.Layouts]
 
       import Plug.Conn
 
@@ -51,7 +51,7 @@ defmodule ATradingSystemWeb do
   def live_view do
     quote do
       use Phoenix.LiveView,
-        layout: {ATradingSystemWeb.Layouts, :app}
+        layout: {ATradingSystemWeb.Components.Layouts, :app}
 
       unquote(html_helpers())
     end
@@ -83,7 +83,7 @@ defmodule ATradingSystemWeb do
       # HTML escaping functionality
       import Phoenix.HTML
       # Core UI components and translation
-      import ATradingSystemWeb.CoreComponents
+      import ATradingSystemWeb.Components.CoreComponents
 
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS
