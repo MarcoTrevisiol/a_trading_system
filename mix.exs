@@ -55,12 +55,16 @@ defmodule ATradingSystem.MixProject do
       {:jason, "~> 1.2"},
       {:bandit, "~> 1.5"},
       {:nimble_csv, "~> 1.1"},
+
+      # Devel helping modules
       {:mix_test_watch, "~> 1.0", only: [:dev, :test], runtime: false},
       {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
       {:credo_naming, "~> 2.1", only: [:dev, :test], runtime: false},
 
       # Deployment support for SystemD deps
       {:mix_systemd, "~> 0.1", only: :dev},
+      # let's encrypt client
+      {:site_encrypt, "~> 0.6"},
 
       # HTTP Request deps
       {:httpoison, "~> 2.0"},

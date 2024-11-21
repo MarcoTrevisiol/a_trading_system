@@ -1,5 +1,5 @@
 defmodule ATradingSystemWeb.Endpoint do
-  use Phoenix.Endpoint, otp_app: :a_trading_system
+  use SiteEncrypt.Phoenix.Endpoint, otp_app: :a_trading_system
 
   # The session will be stored in the cookie and signed,
   # this means its contents can be read but not tampered with.
@@ -49,4 +49,35 @@ defmodule ATradingSystemWeb.Endpoint do
   plug Plug.Head
   plug Plug.Session, @session_options
   plug ATradingSystemWeb.Router
+
+  @impl SiteEncrypt
+  def certification do
+    endpoint_config = Application.fetch_env!(:a_trading_system, ATradingSystemWeb.Endpoint)
+    cert_mode = Keyword.fetch!(endpoint_config, :cert_mode)
+
+    SiteEncrypt.configure(
+      # Note that native client is very immature. If you want a more stable behaviour, you can
+      # provide `:certbot` instead. Note that in this case certbot needs to be installed on the
+      # host machine.
+      client: :native,
+      domains: ["mysite.com", "www.mysite.com"],
+      emails: ["contact@abc.org", "another_contact@abc.org"],
+
+      # By default the certs will be stored in tmp/site_encrypt_db, which is convenient for
+      # local development. Make sure that tmp folder is gitignored.
+      #
+      # Set OS env var SITE_ENCRYPT_DB on staging/production hosts to some absolute path
+      # outside of the deployment folder. Otherwise, the deploy may delete the db_folder,
+      # which will effectively remove the generated key and certificate files.
+      db_folder: System.get_env("SITE_ENCRYPT_DB", Path.join("tmp", "site_encrypt_db")),
+
+      # set OS env var CERT_MODE to "staging" or "production" on staging/production hosts
+      directory_url:
+        case cert_mode do
+          "local" -> {:internal, port: 8002}
+          "staging" -> "https://acme-staging-v02.api.letsencrypt.org/directory"
+          "production" -> "https://acme-v02.api.letsencrypt.org/directory"
+        end
+    )
+  end
 end

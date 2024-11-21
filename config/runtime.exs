@@ -26,7 +26,8 @@ end
 # to check this value into version control, so we use an environment
 # variable instead.
 secret_key_base = System.fetch_env!("SECRET_KEY_BASE")
-port = String.to_integer(System.get_env("PORT", "4000"))
+https_port = String.to_integer(System.fetch_env!("HTTPS_PORT"))
+http_port = String.to_integer(System.fetch_env!("HTTP_PORT"))
 
 config :a_trading_system, ATradingSystemWeb.Endpoint,
   secret_key_base: secret_key_base,
@@ -44,13 +45,13 @@ config :a_trading_system, ATradingSystemWeb.Endpoint,
   #       force_ssl: [hsts: true]
   #
   # Check `Plug.SSL` for all available options in `force_ssl`.
+  http: [port: http_port],
   https: [
-    port: port,
-    cipher_suite: :strong,
-    keyfile: System.fetch_env!("SSL_KEY_PATH"),
-    certfile: System.fetch_env!("SSL_CERT_PATH")
+    port: https_port,
+    cipher_suite: :strong
   ],
-  force_ssl: [hsts: true]
+  force_ssl: [hsts: true],
+  cert_mode: System.fetch_env!("CERT_MODE")
 
 config :a_trading_system,
   broker_endpoint: System.fetch_env!("BROKER_ENDPOINT"),
