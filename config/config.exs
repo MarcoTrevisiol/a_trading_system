@@ -21,7 +21,6 @@ config :a_trading_system, ATradingSystemWeb.Endpoint,
     formats: [html: ATradingSystemWeb.ErrorHTML, json: ATradingSystemWeb.ErrorJSON],
     layout: false
   ],
-  site_encrypt_db: "priv/site_encrypt_db",
   https: [cipher_suite: :strong],
   pubsub_server: ATradingSystem.PubSub,
   live_view: [signing_salt: "gM8h9+M5"],

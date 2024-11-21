@@ -54,18 +54,22 @@ defmodule ATradingSystemWeb.Endpoint do
   def certification do
     endpoint_config = Application.fetch_env!(:a_trading_system, ATradingSystemWeb.Endpoint)
     cert_mode = Keyword.fetch!(endpoint_config, :cert_mode)
-    db_path = Keyword.fetch!(endpoint_config, :site_encrypt_db)
     domain = Keyword.fetch!(endpoint_config, :domain)
     email = Keyword.fetch!(endpoint_config, :email)
-    # auto mode is active only if server is started (usually not in dev)
-    mode = Keyword.get(endpoint_config, :server, false) |> to_mode
+    http_port = Keyword.fetch!(endpoint_config, :http) |> Keyword.fetch!(:port)
+
+    # port used for CA server in "local" cert mode; I do not want another variable for this one,
+    # but I need differnt ports for different instances of the trading system
+    local_ca_port = http_port + 4000
+    server? = Keyword.get(endpoint_config, :server, false)
 
     SiteEncrypt.configure(
       # Note that native client is very immature. If you want a more stable behaviour, you can
       # provide `:certbot` instead. Note that in this case certbot needs to be installed on the
       # host machine.
       client: :native,
-      mode: mode,
+      # auto mode is active only if server is started (usually not in dev)
+      mode: if(server?, do: :auto, else: :manual),
       domains: [domain],
       emails: [email],
 
@@ -75,18 +79,15 @@ defmodule ATradingSystemWeb.Endpoint do
       # Set OS env var SITE_ENCRYPT_DB on staging/production hosts to some absolute path
       # outside of the deployment folder. Otherwise, the deploy may delete the db_folder,
       # which will effectively remove the generated key and certificate files.
-      db_folder: db_path,
+      db_folder: "priv/site_encrypt_db",
 
       # set OS env var CERT_MODE to "staging" or "production" on staging/production hosts
       directory_url:
-        case cert_mode do
-          "local" -> {:internal, port: 8002}
+        case(cert_mode) do
+          "local" -> {:internal, port: local_ca_port}
           "staging" -> "https://acme-staging-v02.api.letsencrypt.org/directory"
           "production" -> "https://acme-v02.api.letsencrypt.org/directory"
         end
     )
   end
-
-  defp to_mode(true), do: :auto
-  defp to_mode(false), do: :manual
 end
