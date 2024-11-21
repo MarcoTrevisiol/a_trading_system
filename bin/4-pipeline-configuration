@@ -38,7 +38,7 @@ cat >"${git_dir}/${repo_name}.git/hooks/update" << EOF
 
 pipeline=${cache_dir}/bin/pipeline
 
-if [[ -f "\$pipeline" && $1 =~ main ]]; then
+if [[ -f "\$pipeline" && \$1 =~ main ]]; then
 	("\$pipeline" main) >/dev/null 2>&1 &
 fi
 
@@ -54,8 +54,9 @@ chown -R "${deploy_user}:${deploy_user}" "$log_dir"
 adduser --system --group --no-create-home "$app_user"
 
 # Deploy dir creation and population
-mkdir -p "${deploy_dir}/"
+mkdir -p "${deploy_dir}/var/"
 chown -R "${deploy_user}:${app_group}" "${deploy_dir}"
+chmod -R 775 "${deploy_dir}/var/"
 
 # Sudoers
 cat >"/etc/sudoers.d/10-${deploy_user}-${app_name}" << EOF
@@ -64,22 +65,15 @@ cat >"/etc/sudoers.d/10-${deploy_user}-${app_name}" << EOF
 ${deploy_user} ALL=(root) NOPASSWD: /bin/systemctl start ${app_name}, /bin/systemctl stop ${app_name}, /bin/systemctl restart ${app_name}
 EOF
 
+# IP redirection
+apt install iptables-persistent
+netfilter-persistent flush
+iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 4010
+iptables -t nat -A PREROUTING -p tcp --dport 443 -j REDIRECT --to-port 4000
+netfilter-persistent save
+
 # Systemd integration
 cp "${app_name}.service" /etc/systemd/system/
 systemctl daemon-reload
 systemctl enable "${app_name}.service"
-
-exit 0
-
-# Ufw stuff
-apt install ufw
-ufw enable
-ufw allow 4000/tcp
-cat >>/etc/ufw/before.rules <<EOF
-*nat
-:PREROUTING ACCEPT [0:0]
--A PREROUTING -p tcp --dport 443 -j REDIRECT --to-port 4000
-COMMIT
-EOF
-
 

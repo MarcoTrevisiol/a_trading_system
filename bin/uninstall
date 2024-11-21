@@ -10,8 +10,6 @@ rm /etc/systemd/system/a-trading-system.service
 rm -r /srv/a-trading-system/
 systemctl daemon-reload
 rm -rf /var/cache/a-trading-system/
-# rm /etc/ufw/before.rules
-# apt purge ufw
 rm /etc/sudoers.d/10-"$deploy_user"-a-trading-system
 rm -r /var/log/pipeline/
 rm -r /srv/git/

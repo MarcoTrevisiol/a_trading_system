@@ -6,7 +6,7 @@ After=local-fs.target network.target
 Type=simple
 User=a-trading-system
 Group=a-trading-system
-WorkingDirectory=/srv/a-trading-system/current
+WorkingDirectory=/srv/a-trading-system/var
 
 ExecStart=/srv/a-trading-system/current/bin/a_trading_system start
 ExecStop=/srv/a-trading-system/current/bin/a_trading_system stop
