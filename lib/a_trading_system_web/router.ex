@@ -35,9 +35,10 @@ defmodule ATradingSystemWeb.Router do
   #   pipe_through :api
   # end
 
+  @realm "A trading system"
   defp auth(conn, _opts) do
     username = Application.fetch_env!(:a_trading_system, :web_username)
     password = Application.fetch_env!(:a_trading_system, :web_password)
-    Plug.BasicAuth.basic_auth(conn, username: username, password: password)
+    Plug.BasicAuth.basic_auth(conn, username: username, password: password, realm: @realm)
   end
 end
