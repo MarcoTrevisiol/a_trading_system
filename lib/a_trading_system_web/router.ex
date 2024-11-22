@@ -1,6 +1,7 @@
 defmodule ATradingSystemWeb.Router do
   use ATradingSystemWeb, :router
   alias Controllers.PageController
+  import Phoenix.LiveDashboard.Router
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -15,10 +16,18 @@ defmodule ATradingSystemWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :protected do
+    plug :auth
+  end
+
   scope "/", ATradingSystemWeb do
-    pipe_through :browser
+    pipe_through [:browser, :protected]
 
     get "/", PageController, :home
+
+    # you can use Plug.BasicAuth to set up some basic authentication
+    # as long as you are also using SSL (which you should anyway).
+    live_dashboard "/dashboard", metrics: ATradingSystemWeb.Telemetry
   end
 
   # Other scopes may use custom stacks.
@@ -26,19 +35,9 @@ defmodule ATradingSystemWeb.Router do
   #   pipe_through :api
   # end
 
-  # Enable LiveDashboard and Swoosh mailbox preview in development
-  if Application.compile_env(:a_trading_system, :dev_routes) do
-    # If you want to use the LiveDashboard in production, you should put
-    # it behind authentication and allow only admins to access it.
-    # If your application does not have an admins-only section yet,
-    # you can use Plug.BasicAuth to set up some basic authentication
-    # as long as you are also using SSL (which you should anyway).
-    import Phoenix.LiveDashboard.Router
-
-    scope "/dev" do
-      pipe_through :browser
-
-      live_dashboard "/dashboard", metrics: ATradingSystemWeb.Telemetry
-    end
+  defp auth(conn, _opts) do
+    username = Application.fetch_env!(:a_trading_system, :web_username)
+    password = Application.fetch_env!(:a_trading_system, :web_password)
+    Plug.BasicAuth.basic_auth(conn, username: username, password: password)
   end
 end

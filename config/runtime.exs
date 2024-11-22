@@ -39,4 +39,6 @@ config :a_trading_system, ATradingSystemWeb.Endpoint,
 config :a_trading_system,
   broker_endpoint: System.fetch_env!("BROKER_ENDPOINT"),
   broker_username: System.fetch_env!("USERNAME"),
-  broker_api_key: System.fetch_env!("API_KEY")
+  broker_api_key: System.fetch_env!("API_KEY"),
+  web_username: "admin",
+  web_password: System.fetch_env!("WEB_PASSWORD")
