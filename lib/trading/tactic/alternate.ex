@@ -7,8 +7,8 @@ defmodule Trading.Tactic.Alternate do
          _tactic_state
        ) do
     case rem(day_number, 2) do
-      0 -> %Trading.Orders.Market{symbol: nil, quantity: 1}
-      1 -> %Trading.Orders.Market{symbol: nil, quantity: -1}
+      0 -> [%Trading.Orders.Market{symbol: nil, quantity: 1}]
+      1 -> [%Trading.Orders.Market{symbol: nil, quantity: -1}]
     end
   end
 
