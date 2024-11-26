@@ -70,6 +70,25 @@ defmodule Broker.Connectivity do
     end
   end
 
+  # Function to query a specific endpoint. Only http request is get
+
+  def query(endpoint_tail) do
+    url = "#{endpoint()}#{endpoint_tail}"
+
+    with {:ok, %HTTPoison.Response{status_code: 200, body: body}} <-
+           HTTPoison.get(url, auth_head()),
+         do: {:ok, body}
+  end
+
+  def query(endpoint_tail, query) do
+    query_params = URI.encode_query(query)
+    url = "#{endpoint()}#{endpoint_tail}?#{query_params}"
+
+    with {:ok, %HTTPoison.Response{status_code: 200, body: body}} <-
+           HTTPoison.get(url, auth_head()),
+         do: {:ok, body}
+  end
+
   # Function that return the headers for authorization using the token stored in the ET
 
   defp auth_head do
