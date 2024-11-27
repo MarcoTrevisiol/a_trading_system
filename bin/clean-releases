@@ -1,0 +1,5 @@
+#!/bin/sh
+
+ls -td /srv/a-trading-system/releases/stag-* | tail -n +4 | xargs rm -rf
+ls -td /srv/a-trading-system/releases/prod-* | tail -n +4 | xargs rm -rf
+
