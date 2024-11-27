@@ -8,13 +8,11 @@ import Config
 # to bundle .js and .css sources.
 config :a_trading_system, ATradingSystemWeb.Endpoint,
   code_reloader: true,
+  debug_errors: true,
   watchers: [
     esbuild: {Esbuild, :install_and_run, [:a_trading_system, ~w(--sourcemap=inline --watch)]},
     tailwind: {Tailwind, :install_and_run, [:a_trading_system, ~w(--watch)]}
-  ]
-
-# Watch static and templates for browser reloading.
-config :a_trading_system, ATradingSystemWeb.Endpoint,
+  ],
   live_reload: [
     patterns: [
       ~r"priv/static/(?!uploads/).*(js|css|png|jpeg|jpg|gif|svg)$",

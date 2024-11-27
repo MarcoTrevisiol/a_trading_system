@@ -13,7 +13,6 @@ config :a_trading_system,
 # Configures the endpoint
 config :a_trading_system, ATradingSystemWeb.Endpoint,
   check_origin: false,
-  debug_errors: true,
   url: [host: "localhost"],
   server: false,
   adapter: Bandit.PhoenixAdapter,
