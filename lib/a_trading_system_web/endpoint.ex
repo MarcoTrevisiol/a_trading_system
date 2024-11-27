@@ -48,7 +48,15 @@ defmodule ATradingSystemWeb.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
+  plug :auth
   plug ATradingSystemWeb.Router
+
+  @realm "A trading system"
+  defp auth(conn, _opts) do
+    username = Application.fetch_env!(:a_trading_system, :web_username)
+    password = Application.fetch_env!(:a_trading_system, :web_password)
+    Plug.BasicAuth.basic_auth(conn, username: username, password: password, realm: @realm)
+  end
 
   @impl SiteEncrypt
   def certification do

@@ -27,4 +27,22 @@ defmodule ATradingSystemWeb.Controllers.PageControllerTest do
 
     assert conn.status == 401
   end
+
+  test "nonexistent path should still be answered with unauthorized", %{conn: conn} do
+    conn = get(conn, "/nonexistent")
+
+    assert conn.status == 401
+  end
+
+  test "authorized but nonexistent should retrieve not found", %{conn: conn} do
+    username = Application.fetch_env!(:a_trading_system, :web_username)
+    password = Application.fetch_env!(:a_trading_system, :web_password)
+
+    conn =
+      conn
+      |> put_req_header("authorization", Plug.BasicAuth.encode_basic_auth(username, password))
+      |> get("/nonexistent")
+
+    assert conn.status == 404
+  end
 end
