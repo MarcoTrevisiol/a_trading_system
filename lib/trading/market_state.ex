@@ -18,26 +18,16 @@ defmodule Trading.MarketState do
   receive returns a state update
   query returns info as required by tactics
   """
-  defp atom_to_module(atom) when is_atom(atom) do
-    atom
-    |> Atom.to_string()
-    |> atom_to_module()
-    |> String.to_atom()
-  end
-
-  defp atom_to_module(string) when is_binary(string) do
-    "Elixir.Trading.Info." <> Macro.camelize(string)
-  end
-
   def initial_state(queried_info) do
     queried_info
-    |> Enum.map(fn i -> {i, atom_to_module(i).initial_value()} end)
+    |> Stream.map(fn i -> {i, atom_to_module(i)} end)
+    |> Stream.map(fn {i, info_module} -> {i, {info_module.initial_value(), info_module}} end)
     |> Enum.into(%{})
   end
 
   def query(state, info) do
     info
-    |> Enum.map(fn i -> {i, Map.get(state, i)} end)
+    |> Enum.map(fn i -> {i, Map.get(state, i) |> elem(0)} end)
     |> Enum.into(%{})
   end
 
@@ -47,6 +37,16 @@ defmodule Trading.MarketState do
     |> Enum.into(%{})
   end
 
-  defp update_value_in_state({key, value}, c),
-    do: {key, atom_to_module(key).updated_value(value, c)}
+  defp atom_to_module(atom) when is_atom(atom) do
+    atom
+    |> Atom.to_string()
+    |> atom_to_module()
+    |> String.to_atom()
+  end
+
+  defp atom_to_module(string) when is_binary(string),
+    do: "Elixir.Trading.Info." <> Macro.camelize(string)
+
+  defp update_value_in_state({key, {value, info_module}}, c),
+    do: {key, {info_module.updated_value(value, c), info_module}}
 end
