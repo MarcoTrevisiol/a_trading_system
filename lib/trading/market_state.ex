@@ -1,15 +1,3 @@
-defmodule Trading.Info.DayNumber do
-  @moduledoc "info for incremental day number"
-  def initial_value, do: 0
-  def updated_value(value, %CandleStick{}), do: value + 1
-end
-
-defmodule Trading.Info.Close do
-  @moduledoc "info for last close price of a security"
-  def initial_value, do: nil
-  def updated_value(_value, %CandleStick{close: close}), do: close
-end
-
 defmodule Trading.MarketState do
   @moduledoc """
   handler of info required by the tactics
