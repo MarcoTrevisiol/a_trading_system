@@ -1,6 +1,6 @@
 defmodule ATradingSystemWeb.Router do
   use ATradingSystemWeb, :router
-  alias Controllers.PageController
+  alias Controllers.{PageController, HelloController}
   import Phoenix.LiveDashboard.Router
 
   pipeline :browser do
@@ -20,6 +20,8 @@ defmodule ATradingSystemWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+
+    get "/hello", HelloController, :index
 
     # you can use Plug.BasicAuth to set up some basic authentication
     # as long as you are also using SSL (which you should anyway).
