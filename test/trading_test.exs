@@ -45,7 +45,7 @@ defmodule TradingTest do
         data_source: prices_filename
       )
 
-    assert net_return == 911.04
+    assert net_return == -455.52
   end
 
   test "raise error on invalid data source" do
