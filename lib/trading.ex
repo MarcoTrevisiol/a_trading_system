@@ -26,12 +26,16 @@ defmodule Trading do
     }
 
     data_source
-    |> File.stream!()
-    |> CSV.parse_stream()
-    |> Stream.map(&parse_candlestick/1)
     |> Enum.reduce(initial_global_state, &reduce_step/2)
     |> Map.get(:account_state)
     |> Map.get(:usd)
+  end
+
+  def read_candlesticks!(filename) do
+    filename
+    |> File.stream!()
+    |> CSV.parse_stream()
+    |> Stream.map(&parse_candlestick/1)
   end
 
   defp reduce_step(

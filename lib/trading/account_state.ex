@@ -1,7 +1,7 @@
 defmodule Trading.AccountState do
   @moduledoc false
 
-  def initial_state, do: %{quantity: +1, usd: -20_513}
+  def initial_state, do: %{usd: 0}
 
   # defstruct [:security_name, :quantity]
   def update(account_state, filled_orders) do

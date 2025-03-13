@@ -31,9 +31,24 @@ defmodule TradingTest do
     assert info == %{close: 57}
   end
 
-  # @tag :skip
+  test "net return of nothing is 0" do
+    net_return =
+      Trading.compute_net_return(
+        strategy: %Trading.Strategy{
+          substrategies: [
+            %Trading.Strategy.WeightedStrategy{weight: 1, substrategy: Trading.Tactic.Alternate}
+          ]
+        },
+        data_source: []
+      )
+
+    assert net_return == 0
+  end
+
+  @tag :skip
   test "work on real data" do
     prices_filename = "test/nq.csv"
+    data_source = Trading.read_candlesticks!(prices_filename)
 
     net_return =
       Trading.compute_net_return(
@@ -42,7 +57,7 @@ defmodule TradingTest do
             %Trading.Strategy.WeightedStrategy{weight: 1, substrategy: Trading.Tactic.Alternate}
           ]
         },
-        data_source: prices_filename
+        data_source: data_source
       )
 
     assert_in_delta(net_return, 398.0, 1.0e-4)
@@ -52,14 +67,8 @@ defmodule TradingTest do
     invalid_data_source = "invalid"
 
     compute_fn = fn ->
-      Trading.compute_net_return(
-        strategy: %Trading.Strategy{
-          substrategies: [
-            %Trading.Strategy.WeightedStrategy{weight: 1, substrategy: Trading.Tactic.Alternate}
-          ]
-        },
-        data_source: invalid_data_source
-      )
+      data_source = Trading.read_candlesticks!(invalid_data_source)
+      data_source |> Enum.empty?()
     end
 
     assert_raise File.Error, compute_fn
