@@ -1,6 +1,6 @@
 defmodule ATradingSystemWeb.Router do
   use ATradingSystemWeb, :router
-  alias Controllers.{PageController, HelloController}
+  alias Controllers.{HelloController, PageController}
   import Phoenix.LiveDashboard.Router
 
   pipeline :browser do
