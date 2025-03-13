@@ -45,7 +45,7 @@ defmodule TradingTest do
         data_source: prices_filename
       )
 
-    assert_in_delta(net_return, -455.52, 1.0e-4)
+    assert_in_delta(net_return, 398.0, 1.0e-4)
   end
 
   test "raise error on invalid data source" do

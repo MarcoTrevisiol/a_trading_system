@@ -38,7 +38,6 @@ defmodule Trading do
          candlestick,
          %{strategy: strategy, market_state: market_state, account_state: account_state} = state
        ) do
-    IO.inspect(date: candlestick.date, close: candlestick.close)
     filled_orders = fill_orders(candlestick, state)
     next_account_state = AccountState.update(account_state, filled_orders)
     orders_from_filled = Strategy.handle_orders_filled(filled_orders, strategy)
@@ -58,8 +57,8 @@ defmodule Trading do
     |> Enum.map(&fill_order(&1, candlestick))
   end
 
-  defp fill_order(%Trading.Orders.Market{quantity: quantity}, %CandleStick{close: close}) do
-    %{filled_at: close, quantity: quantity}
+  defp fill_order(%Trading.Orders.Market{quantity: quantity}, %CandleStick{open: open}) do
+    %{filled_at: open, quantity: quantity}
   end
 
   defp parse_candlestick([date, open, high, low, close, _adj, _volume]) do

@@ -1,7 +1,7 @@
 defmodule Trading.AccountState do
   @moduledoc false
 
-  def initial_state, do: %{quantity: +1, usd: -20708}
+  def initial_state, do: %{quantity: +1, usd: -20_513}
 
   # defstruct [:security_name, :quantity]
   def update(account_state, filled_orders) do
@@ -13,11 +13,9 @@ defmodule Trading.AccountState do
          %{filled_at: price, quantity: quantity},
          %{usd: usd} = account_state
        ) do
-    IO.inspect(account_state)
     old_quantity = Map.get(account_state, :quantity, 0)
     last_price = Map.get(account_state, :last_price, 0)
     new_quantity = old_quantity + quantity
-    #IO.inspect(new_quantity)
     cash_flow = (price - last_price) * old_quantity
     %{quantity: new_quantity, last_price: price, usd: usd + cash_flow}
   end
