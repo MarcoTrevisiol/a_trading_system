@@ -31,12 +31,7 @@ defmodule TradingTest do
     assert info == %{close: 57}
   end
 
-  # Funzione helper per confrontare due float
-  def approx_equal?(a, b, epsilon \\ 1.0e-4) do
-    abs(a - b) < epsilon
-  end
-
-  #@tag :skip
+  # @tag :skip
   test "work on real data" do
     prices_filename = "test/nq.csv"
 
@@ -50,8 +45,7 @@ defmodule TradingTest do
         data_source: prices_filename
       )
 
-    assert approx_equal?(net_return, -455.52)
-    #assert_in_delta(net_return, -455.52, 1.0e-4) #assert net_return == -455.52
+    assert_in_delta(net_return, -455.52, 1.0e-4)
   end
 
   test "raise error on invalid data source" do
