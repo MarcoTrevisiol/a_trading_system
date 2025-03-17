@@ -45,6 +45,35 @@ defmodule TradingTest do
     assert net_return == 0
   end
 
+  test "candlestick without adj and volume" do
+    info_queried = [:close]
+    prices_filename = "test/one.csv"
+    data_source = Trading.read_candlesticks!(prices_filename)
+    initial_state = Trading.MarketState.initial_state(info_queried)
+
+    state = Trading.MarketState.receive(initial_state, data_source[0])
+    info = Trading.MarketState.query(state, info_queried)
+    assert info == %{close: 42}
+  end
+
+  @tag :skip
+  test "first date problem" do
+    prices_filename = "test/two.csv"
+    data_source = Trading.read_candlesticks!(prices_filename)
+
+    net_return =
+      Trading.compute_net_return(
+        strategy: %Trading.Strategy{
+          substrategies: [
+            %Trading.Strategy.WeightedStrategy{weight: 1, substrategy: Trading.Tactic.Alternate}
+          ]
+        },
+        data_source: data_source
+      )
+
+    assert_in_delta(net_return, -1, 1.0e-4)
+  end
+
   @tag :skip
   test "work on real data" do
     prices_filename = "test/nq.csv"
