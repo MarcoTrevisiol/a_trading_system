@@ -53,6 +53,14 @@ defmodule TradingTest do
     assert data_source_evaluated == %CandleStick{date: "Oct 30 2023", open: 0.5, high: 0.5, low: 0.5, close: 0.5}
   end
 
+  test "candlestick with integer" do
+    prices_filename = "test/zero.csv"
+    data_source = Trading.read_candlesticks!(prices_filename)
+    data_source_evaluated = Enum.at(data_source, 0)
+
+    assert data_source_evaluated == %CandleStick{date: "Oct 30 2023", open: 0, high: 0, low: 0, close: 0}
+  end
+
   @tag :skip
   test "first date problem" do
     prices_filename = "test/two.csv"
