@@ -46,14 +46,11 @@ defmodule TradingTest do
   end
 
   test "candlestick without adj and volume" do
-    info_queried = [:close]
     prices_filename = "test/one.csv"
     data_source = Trading.read_candlesticks!(prices_filename)
-    initial_state = Trading.MarketState.initial_state(info_queried)
+    data_source_evaluated = Enum.at(data_source, 0)
 
-    state = Trading.MarketState.receive(initial_state, data_source[0])
-    info = Trading.MarketState.query(state, info_queried)
-    assert info == %{close: 42}
+    assert data_source_evaluated == %CandleStick{date: "Oct 30 2023", open: 0.5, high: 0.5, low: 0.5, close: 0.5}
   end
 
   @tag :skip

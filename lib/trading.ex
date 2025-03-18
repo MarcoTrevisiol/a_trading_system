@@ -65,6 +65,16 @@ defmodule Trading do
     %{filled_at: open, quantity: quantity}
   end
 
+  defp parse_candlestick([date, open, high, low, close]) do
+    %CandleStick{
+      date: date,
+      open: String.to_float(open),
+      high: String.to_float(high),
+      low: String.to_float(low),
+      close: String.to_float(close)
+    }
+  end
+
   defp parse_candlestick([date, open, high, low, close, _adj, _volume]) do
     %CandleStick{
       date: date,
