@@ -39,6 +39,7 @@ defmodule Trading.Strategy do
       MarketState.query(market_state, tactic.info()),
       nil
     )
+    |> Enum.map(fn %{} = position -> %{position | tactic_id: tactic} end)
   end
 
   def handle_orders_filled(_filled_orders, %__MODULE__{}) do

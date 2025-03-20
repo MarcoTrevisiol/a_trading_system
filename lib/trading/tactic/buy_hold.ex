@@ -4,7 +4,7 @@ defmodule Trading.Tactic.BuyHold do
   def info, do: []
 
   def handle_event(%Trading.Event.DayEnded{}, %{}, _tactic_state) do
-    %Trading.Orders.Market{symbol: nil, quantity: 1}
+    %Trading.Positions.Market{symbol: nil, position: 1}
   end
 
   def risk, do: 1

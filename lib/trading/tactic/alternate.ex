@@ -5,8 +5,8 @@ defmodule Trading.Tactic.Alternate do
 
   def handle_event(%Trading.Event.DayEnded{}, %{day_number: day_number}, _tactic_state) do
     case rem(day_number, 2) do
-      0 -> [%Trading.Orders.Market{symbol: nil, quantity: +1}]
-      1 -> [%Trading.Orders.Market{symbol: nil, quantity: -1}]
+      0 -> [%Trading.Positions.Market{symbol: nil, position: +1}]
+      1 -> [%Trading.Positions.Market{symbol: nil, position: -1}]
     end
   end
 

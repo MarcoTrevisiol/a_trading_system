@@ -1,5 +1,5 @@
 defmodule Trading.Orders do
-  @moduledoc "containers for various type of orders emitted by tactics"
+  @moduledoc "containers for various type of orders to be sent to the broker"
   defmodule Market do
     @moduledoc false
     defstruct [:symbol, :quantity]
