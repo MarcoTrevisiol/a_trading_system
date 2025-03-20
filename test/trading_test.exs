@@ -46,40 +46,36 @@ defmodule TradingTest do
   end
 
   test "candlestick without adj and volume" do
-    prices_filename = "test/one.csv"
-    data_source = Trading.read_candlesticks!(prices_filename)
-    data_source_evaluated = Enum.at(data_source, 0)
+    data_source =
+      "test/one.csv"
+      |> Trading.read_candlesticks!()
+      |> Enum.at(0)
 
-    assert data_source_evaluated == %CandleStick{date: "Oct 30 2023", open: 0.5, high: 0.5, low: 0.5, close: 0.5}
+    assert data_source == %CandleStick{
+             date: "Oct 30 2023",
+             open: 0.5,
+             high: 0.5,
+             low: 0.5,
+             close: 0.5
+           }
   end
 
   test "candlestick with integer" do
-    prices_filename = "test/zero.csv"
-    data_source = Trading.read_candlesticks!(prices_filename)
-    data_source_evaluated = Enum.at(data_source, 0)
+    data_source =
+      "test/zero.csv"
+      |> Trading.read_candlesticks!()
+      |> Enum.at(0)
 
-    assert data_source_evaluated == %CandleStick{date: "Oct 30 2023", open: 0, high: 0, low: 0, close: 0}
+    assert data_source == %CandleStick{
+             date: "Oct 30 2023",
+             open: 0,
+             high: 0,
+             low: 0,
+             close: 0
+           }
   end
 
-  @tag :skip
-  test "first date problem" do
-    prices_filename = "test/two.csv"
-    data_source = Trading.read_candlesticks!(prices_filename)
-
-    net_return =
-      Trading.compute_net_return(
-        strategy: %Trading.Strategy{
-          substrategies: [
-            %Trading.Strategy.WeightedStrategy{weight: 1, substrategy: Trading.Tactic.Alternate}
-          ]
-        },
-        data_source: data_source
-      )
-
-    assert_in_delta(net_return, -1, 1.0e-4)
-  end
-
-  @tag :skip
+  # @tag :skip
   test "work on real data" do
     prices_filename = "test/nq.csv"
     data_source = Trading.read_candlesticks!(prices_filename)
